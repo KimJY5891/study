@@ -1,1 +1,2 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"authorship_tag":"ABX9TyN7M28g6vD3EGnkRKMmiNh2"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"code","execution_count":null,"metadata":{"id":"saLwxKMTVUTy"},"outputs":[],"source":["import tensorflow as tf\n","print(\"텐서플로우 버전 : \",tf)"]}]}
+import tensorflow as tf
+print("텐서플로우 버전 : ",tf)
