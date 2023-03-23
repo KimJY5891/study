@@ -92,7 +92,7 @@ print('acc : ',acc)
 import matplotlib.pyplot as plt
 plt.figure(figsize=(9,6))
 plt.plot(hist.history['loss'],marker='.',c='blue',label='loss') # 뭔가 명시하지 않아도 된다는데 
-plt.title('보스턴') #이름 지어주기
+plt.title('breast_cancer') #이름 지어주기
 plt.xlabel('epochs')
 plt.ylabel('loss,val_loss')
 plt.legend()
