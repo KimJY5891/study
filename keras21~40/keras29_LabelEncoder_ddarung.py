@@ -69,9 +69,9 @@ x_train, x_test, y_train, y_test = train_test_split(
     x,y, train_size=0.85,shuffle=True,random_state=1234
 )
 scaler = StandardScaler()
-# #scaler = MinMaxScaler()
-# #scaler = MaxAbsScaler()
-# # scaler = RobustScaler()
+# scaler = MinMaxScaler()
+# scaler = MaxAbsScaler()
+# scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test) 
