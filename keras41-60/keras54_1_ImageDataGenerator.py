@@ -9,19 +9,17 @@ traindatagen=ImageDataGenerator( # 증폭옵션
     rescale=1./255, #스케이링 하겠다. 이미지 값 : 0 ~ 255 - > 0~1 사이로 정규화하겠다. 
     # 정규화 민맥스 스케일러로 전처리 하겠다. 노멀라이제이션
     # 부동소수점으로 연산을 해라 
-   
     horizontal_flip=True, # 아무튼 반전 
     vertical_flip=True ,# 아무튼 반전 
     width_shift_range=0.1, # 좌우로 움직이는것을 10프로 만큼의 사진을 좌우로 이동할 수 있는?
-    height_shift_range=0.1, # 
+    height_shift_range=0.1, 
     rotation_range=5, # 돌리는것 
     zoom_range=1.2, # 약 20프로 확대 하겠다.
     shear_range= 0.7,#찌그렇뜨리는 것 
-    fill_mode='nearest' # 빈 자리를 0 말고  원래 있는 값의 근처갑으로 채워라 
-# 백프로 다하느 ㄴ것이 아니라 몇개씩 골라서 하는것이다. 
+    fill_mode='nearest' # 빈 자리를 0 말고  원래 있는 값의 근처값으로 채워라 
+# 백프로 다하는 것이 아니라 몇 개씩 골라서 하는것이다.
 # 머신이 사람이 누군인지 인식하려고 할때 옆으로 뒤집어있어서도 그 사람이 누군인지 알수 있기 대문에 데이터로 사용할 수 있다. 
 # 숫자 6하고 9는 상하 반전 사용하면 안된다.  (why?)
-)
 
 testdatagen=ImageDataGenerator(
     rescale=1./255,
@@ -37,8 +35,7 @@ testdatagen=ImageDataGenerator(
     # shear_range= 0.7,
 )
 xy_train = traindatagen.flow_from_directory(
-    'c:/study_data/_data/brain/train/',
-    #'d:/study_data/_data/brain/train/',
+    'd:/study_data/_data/brain/train/',
     target_size= (200,200), 
     batch_size=5,
     class_mode='binary',# 수치화해서 만들어 준다. 0과 1로 변한다.  int형
@@ -56,8 +53,7 @@ xy_train = traindatagen.flow_from_directory(
 # y = (160,)
 
 xy_test = testdatagen.flow_from_directory(
-    'c:/study_data/_data/brain/test/',
-    #'d:/study_data/_data/brain/test/',
+    'd:/study_data/_data/brain/test/',
     target_size= (200,200), 
     batch_size=5,
     class_mode='binary',
@@ -92,15 +88,10 @@ print(xy_train[0][1].shape) #(5,)
 # 즉 엑스와이 트레인은 0부터 3번까지 잇다. 
 # [모든]번째의 [0]번째는 x
 # [모든]번째의 [1]번째는 y
-# 
+
 
 print('==========================================================================')
 print(type(xy_train)) # <class 'keras.preprocessing.image.DirectoryIterator'>
 print(type(xy_train[0])) # xy_train[0]은 1번째 배치 | <class 'tuple'> - 못바꾼다. 
 print(type(xy_train[0][0])) # <class 'numpy.ndarray'>
 print(type(xy_train[0][1])) # <class 'numpy.ndarray'>
-
-
-
-#2. 모델 구성 
-#3. 
