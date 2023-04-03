@@ -53,7 +53,7 @@ import matplotlib.pyplot as plt
 plt.figure(figsize=(7,7))
 for i in range(49) : 
     plt.subplot(7,7,i+1)
-    plt.axis('off')
+    plt.axis('off') # 모든 축과 
     plt.imshow(x_data[0][0][i],cmap='gray')
 plt.show()
 
