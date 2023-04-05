@@ -9,7 +9,8 @@ from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import r2_score, accuracy_score
 from sklearn.model_selection import train_test_split
 
-
+# 임베딩이니까 원핫필요 없징 ! 
+# 원핫의 문제해결을 위해서 사용 
 docs = ['너무 재밋어요','참 최고예요','참 잘 만든 영화예요',
         '추천하고 싶은 영화입니다.','한 번 더 보고 싶네요','글세요',
         '별로에요','생각보다 지루해요','연기가 어색해요',
