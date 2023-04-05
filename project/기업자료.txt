@@ -1,5 +1,3 @@
-
-
 1. lg  콜센터 ai 시스템 
 - ai 기반 시스템 기획 및 관련 시스템 구축 운영 (stt/ta 음성봇 등 )
 - ivr 시나리오 기획 운영 
@@ -14,14 +12,6 @@ https://www.jobkorea.co.kr/Recruit/GI_Read/41423865?Oem_Code=C1&logpath=1&stext=
 + 영상합성 
 + 이미지 생성형 ai기술
 https://www.jobkorea.co.kr/Recruit/GI_Read/40761026?Oem_Code=C1&logpath=1&stext=ai&listno=3
-
-
-
-5. 언어 지능
-- 문서 요약, 검토, 분류, 변환 등 자연어 처리
-- 문서 정보 dx 및 자동 정보 추출
-- large-scale ai 기반 서비스
-https://www.jobkorea.co.kr/Recruit/GI_Read/41419373?Oem_Code=C1&logpath=1&stext=ai&listno=6
 
 6.지식시스템
 - 개인 맞춤형 컨테츠 추천 시스템 (여기서 발전해서 물건 이나 기타 등등 추천)
