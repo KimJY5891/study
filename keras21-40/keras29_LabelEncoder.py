@@ -38,7 +38,6 @@ from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder() # 정의
 le.fit(train_csv['type']) #
 aaa = le.transform(train_csv['type']) # 0과 1로 변화
-print
 print(aaa.shape)
 print(type(aaa))
 #print(np.unique(aaa,return_count=True))
