@@ -1,15 +1,12 @@
 import pandas as pd
-import tensorflow as tf
 import numpy as np
-from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras.models import Sequential,Model
 from tensorflow.keras.utils import to_categorical
 from tensorflow.python.keras.layers import Dense,Input, Conv1D,Flatten ,Dropout,LSTM,Bidirectional
 from sklearn.metrics import r2_score, accuracy_score,mean_squared_error
 from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.preprocessing import MaxAbsScaler, RobustScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 def split_x(dataset, timesteps) :
     x_list =[]
     for i in range(len(dataset)-timesteps) :
@@ -196,17 +193,3 @@ result = result.reshape(2,timesteps,15)
 print('result : ',result)
 print('result : ',result.shape) #(2, 15, 15, 1)
 print('time : ',round((end-start),2))
-
-
-'''
-rmse_score01 = rmse(sam_y_test,y_predict[0])
-rmse_score02 = rmse(hyun_y_test,y_predict[1])
-rmse_score = (rmse_score01+rmse_score02)/2
-print('rmse스코어 : ',rmse_score)
-
-r2_01=r2_score(sam_y_test,y_predict[0])
-r2_02=r2_score(hyun_y_test,y_predict[1])
-r2=(r2_01+r2_02)/2
-print('r2스코어 : ',r2)
-# 데이터 갯수 100일 이하 
-'''
