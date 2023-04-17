@@ -1,3 +1,19 @@
+'''
+테스트 데이터는 훈련에 참여를 안한다. 
+데이터 수집에 돈과 인력이 들어가는데, 
+테스트 데이터는 훈련에 들어가지 않는것이 아깝다. 
+그래서 아깝다고 생각해서 테스트 데이터도 훈련에 이용하고 시팓.
+ 그래서 나온 것이 크로스 발리데이션 안에  케이 폴드가 잇다. 
+예시로 8:2  = train : test/val
+순차적으로 앞으로 가면서 테스트 데이터를 하면 된다. 
+
+나온평지표 값에 대한 평균 값을 사용할 수도 있고 잘 나온 값을 사용할 수도 있고 알아서 선택하기 
+너무 잘나와도 과적합일 수도 있음
+슬라이싱과 if과 for문을 사용하여 만들수 있다.  - 사이킷런에 만들어진 것이 잇다.
+
+트레인 테스트 스플릿
+'''
+
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
