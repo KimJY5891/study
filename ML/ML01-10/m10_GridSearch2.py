@@ -28,14 +28,22 @@ paramiters = [
 ] # 총 52번
 # 키밸류 형태로 받기위해서 리스트안에 딕셔너리 형태 변환
 
-# 2. 모델 
+# 2. 모델
+# 다중 for문 같은 것 
 model = GridSearchCV(SVC(),
                      paramiters, # 52번돌림
                      #cv=kfold, # 5번돌림  
-                     cv=5, # 더 잘 나온 이유 : cv의 디폴트가 StratifiedKFold이다. 그래서 파람 조절을  cv = 5를 기본으로 줬을 더 나을 수 잇다. 회귀라면 kfold
-                     # 
+                     cv=5, # 더 잘 나온 이유 : cv의 디폴트가 StratifiedKFold이다. 그래서 파람 조절을  cv = 5를 기본으로 줬을 더 나을 수 잇다. 회귀라면 kfold 
                      verbose=1,
-                     refit=True,
+                     # refit=True, # 최상의 파라미터로 값을 저장 - 디폴트
+                     # refit=False, # 최종(마지막) 파라미터로 출력 
+                     # AttributeError: 'GridSearchCV' object has no attribute 'best_estimator_'
+                     # AttributeError: This GridSearchCV instance was initialized with `refit=False`. 
+                     # score is available only after refitting on the best parameters.
+                     # You can refit an estimator manually using the `best_params_` attribute 
+                     # best_estimator_,best_params_ 둘 다 없다고 나옴 
+                     # 리핏이라는 최적값가 안먹힌다는 말 
+                     # 최적값를 저장 안하고 계속 도는 것 240번 
                      n_jobs=-1) # 총260번 돌림
 
 # 매개변수 = 파라미터
@@ -51,4 +59,16 @@ end_time = time.time()
 print('걸린 시간 : ',np.round(end_time-start_time))
 #Fitting 5 folds for each of 40 candidates, totalling 200 fits
 # 40 candidates : 후보자 = 파라미터
-# 보이는 이유  verbose=1,
+# 보이는 이유  verbose=1
+
+y_pred = model.predict(x_test)
+print('acc_score : ',accuracy_score(y_test,y_pred))
+# 가장 좋은 것인지 어떻게 신뢰할 수 있는가? 
+
+y_pred_best= model.best_estimator_.predict(x_test)
+print('최적의 튠  acc : ',accuracy_score(y_test,y_pred_best))
+# 최적의 튠  acc :  1.0
+
+
+
+
