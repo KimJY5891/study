@@ -25,14 +25,14 @@ x, y = load_iris(return_X_y=True)
 
 # x_train, x_test, y_train, y_test = train_test_split(
 #     x, y, shuffle=True random_state=123, test_size=0.2
-# )
+# ) - 만약 이걸 햇다면 여기서 셔플 됏을 수도 잇다. 
 n_splits = 5
 kfold = KFold(n_splits = n_splits,#디폴트 5  옛날에는 3이였음 근데 바뀐거면 지금것이 좋다는 의미 
         # 데이터가 100프로라면 20프로씩 나눠질 것 
       shuffle=True,  # 처음에 섞고 나서 나중에 잘라서 테스트, 테스트 할때 마다 섞는건 아님 
       #테스트 할 때마다 셔플하면 겹치는 것이 있다. 
       # 수치가 얼마나 좋은지는 데이터의 크기마다 다르다. 
-      # 
+      # 셔플의 디폴트 false
       random_state=123,
       )
 
