@@ -17,13 +17,31 @@ from sklearn.utils import all_estimators
 import warnings
 warnings.filterwarnings('ignore')
 
+# 삼중 포문!! 
+# 1. 데이터 
+# 2. 스케일
+# 3. 모델 
+
+from sklearn.datasets import  load_boston,fetch_california_housing
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler, StandardScaler,MaxAbsScaler,RobustScaler
+from sklearn.ensemble import RandomForestClassifier,RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,r2_score
+from sklearn.pipeline import make_pipeline
+from sklearn.svm import SVC
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.utils import all_estimators
+import warnings
+warnings.filterwarnings('ignore')
+
 dataset_list = [
+    load_iris(return_X_y=True),
+    load_breast_cancer(return_X_y=True),
     load_wine(return_X_y=True),
     load_digits(return_X_y=True),
-    load_breast_cancer(return_X_y=True),
-    load_iris(return_X_y=True)
 ]
-data_list_name = ['아이리스',
+data_list_name = ['캘리포니아',
                   '캔서',
                   '와인',
                   '디지트']
@@ -44,12 +62,15 @@ for i,v in enumerate(dataset_list):
                 model = make_pipeline(j,algorithms())
                 # 3. 훈련
                 model.fit(x_train,y_train)
-                scores = cross_val_score(model, x, y)
-                results = round(np.mean(scores), 4)
+                #4. 평가, 예측 
+                results = model.score(x_test,y_test)
+                y_pred = model.predict(x_test)
+                acc = accuracy_score(y_test,y_pred)
                 print("==================================================")
                 print("데이터 : ", data_list_name[i])
+                print("acc : ",acc)
                 print("모델 : ", name)
-                print("점수 : ", scores)
+                print("점수 : ", results)
                 print("스케일러 : ", str(j))
                 if max_score < results :
                     max_score = results
@@ -58,9 +79,3 @@ for i,v in enumerate(dataset_list):
                     max_scaler = j
         except:
             continue
-        
-print("==================================================")
-print("최고 점수 받은 데이터 : ", max_data)
-print("최고 모델 : ", max_model)
-print("최고 점수 : ", max_score)
-print("최고 스케일러 : ", max_scaler)
