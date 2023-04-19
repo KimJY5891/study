@@ -53,10 +53,14 @@ for i,v in enumerate(dataset_list):
                 print("스케일러 : ", str(j))
                 if max_score < results :
                     max_score = results
-                    max_name = name
+                    max_model = name
+                    max_data= data_list_name[i]
                     max_scaler = j
         except:
             continue
         
 print("==================================================")
-print("최고모델 : ", max_name, max_score, str(max_scaler))
+print("최고 점수 받은 데이터 : ", max_data)
+print("최고 모델 : ", max_model)
+print("최고 점수 : ", max_score)
+print("최고 스케일러 : ", max_scaler)
