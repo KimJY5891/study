@@ -31,22 +31,26 @@ scaler_list = [MinMaxScaler(),StandardScaler(),MaxAbsScaler(),RobustScaler() ]
 for i,v in enumerate(dataset_list):
     # 1. 데이터
     x,y = v
+    x_train, x_test, y_train, y_test = train_test_split(
+        x,y, train_size=0.8, shuffle=True, random_state=337
+    )
     # 2. 모델 구성
     for j in scaler_list :
         try:
-            scaler = j
-            x=scaler.fit_transform(x)
             max_score = 0
             allAlgoritms = all_estimators(type_filter='classifier')
             for (name, algorithms) in allAlgoritms:
                 model = algorithms()
+                model = make_pipeline(j,algorithms())
+                # 3. 훈련
+                model.fit(x_train,y_train)
                 scores = cross_val_score(model, x, y)
                 results = round(np.mean(scores), 4)
                 print("==================================================")
                 print("데이터 : ", data_list_name[i])
                 print("모델 : ", name)
                 print("점수 : ", scores)
-                print("스케일러 : ", str(scaler))
+                print("스케일러 : ", str(j))
                 if max_score < results :
                     max_score = results
                     max_name = name
