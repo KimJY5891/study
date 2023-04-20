@@ -32,8 +32,6 @@ for index, value in enumerate(datasets) :
     x,y = value
     #2. 모델 구성 
     allAlgoritms = all_estimators(type_filter='classifier')
-    max_score = 0
-    max_name = '바보'
     for (name,algorithm) in allAlgoritms :
         try:
             model = algorithm()
