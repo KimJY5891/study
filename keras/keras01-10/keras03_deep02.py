@@ -1,9 +1,9 @@
-  #1.데이터
+# 1.데이터
 import numpy as np
 x = np.array([1,2,3])
 y = np.array([1,2,3])
 
-#2. 모델
+# 2. 모델
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
