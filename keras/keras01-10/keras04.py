@@ -1,5 +1,5 @@
-#api 가지고 올때 최상단에 몰빵해서 작성하면 가독성이 좋아진다.
-#import 가져올때 순서는 상관없다.
+# api 가지고 올때 최상단에 몰빵해서 작성하면 가독성이 좋아진다.
+# import 가져올때 순서는 상관없다.
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -8,7 +8,7 @@ from tensorflow.keras.layers import Dense
 x = np.array([1,2,3])
 y = np.array([1,2,3])
 
-#실스반들기 [6]을 예측한다.
+#실수 만들기 [6]을 예측한다.
 
 #2. 모델
 
