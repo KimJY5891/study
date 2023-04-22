@@ -20,8 +20,7 @@ from sklearn.medel_selection import train_test_split
 x=np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
 y=np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,6,17,23,21,20])
 x_train, x_test, y_train, y_test = train_test_split(
-x,#x_train과 x_test로 분리
-y,#y_train과 y_test로 분리
+x,y,
 train_size=0.75, shuffle=True, random_state
 =2569)
 
