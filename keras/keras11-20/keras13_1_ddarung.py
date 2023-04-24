@@ -47,9 +47,8 @@ print(train_csv.info())
 #  7   hour_bef_pm10           1369 non-null   float64
 #  8   hour_bef_pm2.5          1342 non-null   float64
 #  9   count                   1459 non-null   float64
-#
 
-#결집치 처리해야한다.
+#결측치 처리해야한다.
 #빨간 점 직전까지 실행 
 print(train_csv.describe())
 #min: 최소값 ,max : 최대값, 50%: 중위값 
