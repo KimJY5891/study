@@ -1,14 +1,12 @@
-
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import numpy as np
 from sklearn.model_selection import train_test_split
 #교육용 데이터셋
 from sklearn.datasets import load_boston
+
 #1. 데이터
 datasets= load_boston()
-#정규화 :예를 들어서 1에서 1조 데이터일때, 1조x1조 경우, 오버 쿨럭?걸릴수도 있음 
-#그래서 0부터 1사이로 압축 => 최대치로 나눈다.
 
 x= datasets.data
 y= datasets.target
@@ -23,6 +21,7 @@ x_train, x_test, y_train, y_test = train_test_split(
     x,y,
     train_size=0.7,random_state=2579
 )
+
 #2.모델구성
 model = Sequential()
 model.add(Dense(26,input_dim=13))
