@@ -19,15 +19,15 @@ from xgboost import XGBRegressor
 # 실험적인 모델 사용할 때 필요한 import 
 # impute : 돌리다
 # 결측치에 대한 책임을 돌릴 것 같다.
-# imputer = SimpleImputer() # 디폴트 = 평균
-# imputer = SimpleImputer(strategy='mean')
-# imputer = SimpleImputer(strategy='median')
-# imputer = SimpleImputer(strategy='most_frequent') # 최빈값 다 똑같은 빈도일 경우 가장 작은 값을 넣는다. 
-# imputer = SimpleImputer(strategy='constant') # 0 # 끊임없는 
-# imputer = SimpleImputer(strategy='constant',fill_value=7777)
-# imputer = KNNImputer() # knn알고리즘으로 평균값을 찾아낸 것이다. 
+imputer = SimpleImputer() # 디폴트 = 평균
+imputer = SimpleImputer(strategy='mean')
+imputer = SimpleImputer(strategy='median')
+imputer = SimpleImputer(strategy='most_frequent') # 최빈값 다 똑같은 빈도일 경우 가장 작은 값을 넣는다. 
+imputer = SimpleImputer(strategy='constant') # 0 # 끊임없는 
+imputer = SimpleImputer(strategy='constant',fill_value=7777)
+imputer = KNNImputer() # knn알고리즘으로 평균값을 찾아낸 것이다. 
 #k:최근접,  n : 네이버 , 최근접 이웃에서 한정하는것  
-imputer = IterativeImputer() # 이거는 약해서 위나 아래로만 사용 
+imputer = IterativeImputer() # 이거는 약해서 위나 아래로만 사용 # 단순 선형회귀 # 하지만 대회나 그런 곳에서 이상치나 결측치 맞출 때 안맞을 수도 있을 수 있다. 
 imputer = IterativeImputer(estimator=DecisionTreeRegressor()) 
 imputer = IterativeImputer(estimator=XGBRegressor()) 
 # 아직 실험적인것 
