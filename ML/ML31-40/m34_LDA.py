@@ -6,7 +6,9 @@
 # y가 필요하다. 
 # 데이터의 클래스에 따라 가른다. 
 # 차원 축소 
-# 회귀에서 아마도 안될 것 같음 찾아봐야함 
+# 회귀에서 사용은 원래 안됌 
+# 전처리와 비슷하게 사용할 수 있다. 
+# PCA 지도 학습개념
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
