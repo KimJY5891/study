@@ -40,11 +40,9 @@ print(hist.history)
 #4. 평가, 예측
 loss = model.evaluate(x_test,y_test)
 print('loss : ',loss)
-#result =model.predict([17])
-# # 뭔가 명시하지 않아도 된다는데 
+
 import matplotlib.pyplot as plt
-#한글 
-plt.rcParams['font.family'] = 'Malgun Gothic'
+plt.rcParams['font.family'] = 'Malgun Gothic' #한글  
 plt.figure(figsize=(9,6))
 plt.plot(hist.history['val_loss'],marker='.',c='red',label='val_loss') # 뭔가 명시하지 않아도 된다는데 
 plt.plot(hist.history['loss'],marker='.',c='blue',label='loss') # 뭔가 명시하지 않아도 된다는데 
