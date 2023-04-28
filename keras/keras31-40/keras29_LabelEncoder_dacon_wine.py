@@ -1,6 +1,3 @@
-
-
-#데이콘  따릉이 문제 풀이
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error #mse에서 루트 씌우면 rmse로 할 수 있을지도?
 import pandas as pd
@@ -16,11 +13,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler, StandardScaler #전처리
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler #전처리
 
-
 # 우리가 사용할 수 있도록 바꿔야함
-
-
-
 
 #1. 데이터
 
@@ -108,10 +101,6 @@ model.compile(loss='categorical_crossentropy',optimizer='adam',
 from tensorflow.python.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_accuracy',patience=50,mode='max',
                verbose=1,restore_best_weights=True)
-
-
-
-
 model.fit(x_train,y_train,epochs=3000,batch_size=100,verbose=1,validation_split=0.2,callbacks=[es])
 # 회귀에서는 매트릭에서 입력해서 볼 수 있다.
 
