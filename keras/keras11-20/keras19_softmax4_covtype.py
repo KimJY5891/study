@@ -79,7 +79,7 @@ import matplotlib.pyplot as plt
 plt.figure(figsize=(9,6))
 plt.plot(hist.history['val_acc'],marker='.',c='red',label='val_loss') # 뭔가 명시하지 않아도 된다는데 
 plt.plot(hist.history['acc'],marker='.',c='blue',label='loss') # 뭔가 명시하지 않아도 된다는데 
-plt.title('asd') #이름 지어주기
+plt.title('fetch_covtype') #이름 지어주기
 plt.xlabel('epochs')
 plt.ylabel('loss,val_loss')
 plt.legend()
