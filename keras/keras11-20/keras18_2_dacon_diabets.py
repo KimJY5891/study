@@ -55,6 +55,7 @@ es = EarlyStopping(monitor='val_accuracy',patience=160,mode='max',
                verbose=1,restore_best_weights=True)
 model.fit(x_train,y_train,epochs=3000,batch_size=1000,verbose=1,validation_split=0.2,callbacks=[es])
 # 회귀에서는 매트릭에서 입력해서 볼 수 있다. 
+
 # 4. 평가, 예측
 result =model.evaluate(x_test,y_test) 
 print('result : ',result )
