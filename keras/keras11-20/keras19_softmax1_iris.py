@@ -21,7 +21,7 @@ x=datasets['data']
 y=datasets.target
 print(x.shape,y.shape) #(150, 4) (150,)
 print(x)
-print(y) 4⁴ㅡ
+print(y)
 # 왜 섞어줘야하지?????????????
 # 와이 값큰 것은 라벨값을 알기 위해서 어떻게 해야하나
 # 넘파이에 갯수를 알 수 있는 것이 있다. 
@@ -30,20 +30,20 @@ print("y의 라벨 값 :",np.unique(y)) #[0 1 2]
 #나누기전 원핫! 판다스/사이킷런/텐서플로우에 각각존재
 # 텐서플로우  tf.one_hot() tf.one_hot(라벨 인덱스 목록, 라벨 개수
 y = to_categorical(y)
-# 판다스 pd.get_dummies() 투 카테코리컬
+# 판다스 pd.get_dummies() 
 # 사이킷런
 # from sklearn.preprocessing import OneHotEncoder
 # ohe = OneHotEncoder(sparse=False)
 # train_cat = ohe.fit_transform(train[['cat1']])
-한 ㅛ################################################
+################################################
 
 x_train, x_test, y_train, y_test = train_test_split(
     x,y, 
     train_size=0.8,
     shuffle=True,random_state=456,
-    stratify= y 
-)# 이론상1으로는 이게 맞긴하지만 가끔은 안넣었을 때 잘 나올수도 있다. 
-    # 통계적으로 해라
+    stratify= y # 이론상으로는 이게 맞긴하지만 가끔은 안넣었을 때 잘 나올수도 있다. 
+)
+# 통계적으로 해라
 print("y_test : ",y_test)
 print(np.unique(y_train,return_counts=True))
 # y 라벨 값이 특정 값에 몰려있으면 그 특정값이 될 확률 이 올리간다. 
@@ -84,9 +84,6 @@ from tensorflow.python.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_acc',patience=10,mode='max',
                verbose=1,restore_best_weights=True)
 hist=model.fit(x_train,y_train,epochs=700,batch_size=800,verbose=1,validation_split=0.2,)
-
-
-
 
 # 4. 평가, 예측
 result =model.evaluate(x_test,y_test) 
