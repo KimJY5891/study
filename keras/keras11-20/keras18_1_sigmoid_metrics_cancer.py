@@ -51,9 +51,9 @@ model.add(Dense(6,activation="linear"))
 model.add(Dense(4,activation="linear"))
 model.add(Dense(2))
 model.add(Dense(1,activation='sigmoid'))
-# 마지망게 sigmoid 넣는다. ㅣ
+# 마지막에 sigmoid 넣는다.
 # 최종값을 0과 1로 사이로 한정시키다. 
-# 활성화함수 
+# activation = 활성화함수 
 
 #3. 컴파일, 훈련 
 model.compile(loss='binary_crossentropy',optimizer='adam',
@@ -64,15 +64,16 @@ es = EarlyStopping(monitor='val_loss',patience=10,mode='min',
                verbose=1,restore_best_weights=True)
 hist=model.fit(x_train,y_train,epochs=700,batch_size=800,verbose=1,validation_split=0.2,)
 # 회귀에서는 매트릭에서 입력해서 볼 수 있다. 
-#mse  wl
+
+
 # 4. 평가, 예측
 result =model.evaluate(x_test,y_test) # loss와 메트릭스에 집어넣은 값이 들어간다. 
 # loss: 0.3266 - accuracy: 0.8901 - mse: 0.0905 - mae: 0.1515 - val_loss: 0.2226 - val_accuracy: 0.9011 - val_mse: 0.0655 - val_mae: 0.1107
 print('result : ',result )
 y_predict=np.round(model.predict(x_test))
-# 정확도 지표
+#  accuracy_score (정확도 지표)
 # 0이나 1이냐 
-# accuracy_score : 서로 같냐를 따지는 지표
+# 서로 같냐를 따지는 지표
 # print('--=-===================================================')
 # print(y_test[:5]) #010101
 # print(y_predict[:5]) #실수 형태
@@ -80,8 +81,8 @@ y_predict=np.round(model.predict(x_test))
 # 실수형태에서 0또는 1로 한정시키고 싶다. 
 # accuracy_score에서 꽝이다. 
 # Classification metrics can't handle a mix of binary and continuous targets
-# 0101(이진분류)과 연속 숫자와 같이 처리할 수 없어...ㅠㅜ 
-#반올림해도 된다.
+# 0101(이진분류)과 연속 숫자와 같이 처리할 수 없어
+# 반올림해도 된다.
 # continuous targets: 010101  이런 데이터
 acc = accuracy_score(y_test,y_predict)
 # acc = accuracy_score(y_test,y_predict)
