@@ -90,3 +90,4 @@ scaler = RobustScaler()
 result :  [0.8564956784248352, 0.7777777910232544]
 acc :  0.2222222222222222
 """
+# StandardScaler 승
