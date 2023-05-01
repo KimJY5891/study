@@ -148,7 +148,7 @@ loss:  2880.802001953125
 r2 스코어 :  0.5993911642645371
 rmse : 53.67310510766492
 """
-
+# MaxAbsScaler
 """
   #데이콘  따릉이 문제 풀이
 from sklearn.model_selection import train_test_split
