@@ -10,7 +10,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler #전처리
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler #전처리
 
 
-# 1. epdlxj
+# 1. 데이터
 (x_train,y_train),(x_test,y_test) = mnist.load_data() # 데이터를 넣어줌
 
 
@@ -25,8 +25,6 @@ x_train = x_train.reshape(60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1) # 데이터의 구조만 바귀는 것 순서와 값이 바뀌는 게 아님
 y_train= to_categorical(y_train)
 y_test= to_categorical(y_test)
-
-
 
 
 # 2. 모델 구성
@@ -58,7 +56,6 @@ model.fit(x_train,y_train,epochs= 16,batch_size=25000,
                 validation_split=0.2,verbose=1,callbacks=[es])
 
 
-#4. 평가 예측
 # 4. 평가, 예측
 result =model.evaluate(x_test,y_test)
 print('result : ',result )
