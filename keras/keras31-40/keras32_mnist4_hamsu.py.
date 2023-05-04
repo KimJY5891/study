@@ -9,8 +9,9 @@ from tensorflow.keras.datasets import mnist
 from sklearn.preprocessing import MinMaxScaler, StandardScaler #전처리
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler #전처리
 from tensorflow.keras.utils import to_categorical
-# 1. 데이터
 
+
+# 1. 데이터
 
 (x_train,y_train),(x_test,y_test) = mnist.load_data() # 데이터를 넣어줌
 scaler = MinMaxScaler()
@@ -38,12 +39,10 @@ print("x_test : ",x_test.shape)# x_test :  (10000, 28, 28, 1)
 print("y_train : ",y_train.shape) # y_train :  (60000, 10)
 print("y_test : ",y_test.shape) # y_test :  (10000, 10)
 
-
 #CNN인데 to_categorical 사용해야하는 이유?
 
 
 #2. 모델
-
 
 # model =Sequential()
 # model.add(Conv2D(10,(2,2),padding='same',input_shape=(28,28,1)))
