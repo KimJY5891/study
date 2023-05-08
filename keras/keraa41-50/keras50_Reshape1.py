@@ -35,7 +35,7 @@ model.add(Conv2D(10,3))
 model.add(MaxPooling2D())
 model.add(Flatten()) # (N,250)
 model.add(Reshape(target_shape=(25,10))) #(n,25,10) 행인 데이터 갯수는 작성하지 않는다. 
-# 리쉐이프 시, 안에 있는 내용 순서는 바뀌지 않는다.
+# 리쉐이프 시,안에 있는 내용 순서는 바뀌지 않는다.
 model.add(Conv1D(10,3,padding='same'))
 model.add(LSTM(784))
 model.add(Reshape(target_shape=(28,28,1))) #(n,25,10)
