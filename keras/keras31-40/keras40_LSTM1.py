@@ -12,7 +12,7 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN,Dropout, LSTM
 
-# 1. 데티ㅓ 
+# 1. 데이터
 datasets = np.array([1,2,3,4,5,6,7,8,9,10])
 #y=?
 #시계열 은 y가 없다. 
