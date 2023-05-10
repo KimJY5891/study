@@ -411,4 +411,3 @@ y_submit = model.predict(true_test)
 submission_csv['PM2.5'] = y_submit
 submission_csv.to_csv(path_save + '0510_LSTM_TIME.csv',encoding='utf-8')
 print('완료')
-
