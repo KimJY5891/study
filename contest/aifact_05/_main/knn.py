@@ -1,6 +1,3 @@
-################# 제출 단계에서 오류 남 ####################
-
-
 import math
 import numpy as np
 import pandas as pd
@@ -302,7 +299,7 @@ train_all_dataset :  Index(['PM2.5', '연도', '기온(°C)', '풍향(deg)', '�
 
 '''
 
-true_test = test_all_dataset[test_all_dataset['PM2.5'].isnull()].drop('PM2.5',axis=1).copy()
+
 
 imputer_start = time.time()
 ############################# 결측치 처리 #########################################
@@ -328,7 +325,20 @@ train_all_dataset = pd.DataFrame(train_all_dataset,columns=data_col)
 test_all_dataset= pd.DataFrame(test_all_dataset,columns=data_col)
 imputer_end = time.time()
 
+# true_test 모으기 
+true_test_list = []
+a = 48
 print('imputer_time : ',round(imputer_end-imputer_start,2))
+for i in range(1088) : # 3일치가 1088묶음으로 있다. 
+    true_test_list.append(
+        test_all_dataset[a + 48:a + 120] # 3일치
+                          ) 
+    a =+ 120 # 2일 
+true_test = pd.concat(true_test_list,axis=0,ignore_index=True)
+print('true_test.head(200) : ',true_test.head(200))
+print('true_test.shape : ',true_test.shape) # (78264, 11)
+print('len(true_test) : ',len(true_test)) # 78264
+# print(len(true_test)) # 78336
 
 y = train_all_dataset['PM2.5']
 x = train_all_dataset.drop(['PM2.5'],axis=1)
@@ -345,19 +355,21 @@ x_test = scaler.transform(x_test)
 
 
 #2. 모델 
-
+print('KNeighborsRegressor')
 start= time.time()
 model = KNeighborsRegressor(n_neighbors=10,weights='distance')
 
 
 #3. 훈련 
 
+print('훈련')
 model.fit(x_train,y_train)
 end= time.time()
 print('걸린 시간 : ',round(end -start,2),'초')
 
 
 # 4. 평가, 예측
+print('평가, 예측')
 
 result = model.score(x_test,y_test)
 y_pred = model.predict(x_test)
@@ -369,15 +381,21 @@ print('mae : ',mae)
 
 
 # 5. 제출
+print('제출')
 
-print(true_test.head(50))
-print(true_test.shape)
+# print(true_test.head(50))
+# print(true_test.shape) # (78336, 4)
+true_test = true_test.drop(['PM2.5'],axis=1).copy()
 
 submission_csv = pd.read_csv(path +'answer_sample.csv')
 print(submission_csv.shape)
 y_submit = model.predict(true_test)
 submission_csv['PM2.5'] = y_submit
 submission_csv.to_csv(path_save + '0502_01.csv',encoding='utf-8')
+print('완료')
 
-
-
+'''
+model.score :  0.5816876365740518
+r2 :  0.5816876365740518
+mae :  0.03087302806661622
+'''
