@@ -349,11 +349,13 @@ y = train_all_dataset['PM2.5']
 x = train_all_dataset.drop(['PM2.5'],axis=1)
 
 x = split_x(x,timesteps)
-y = y[timesteps:]
+y = y[(timesteps-1):]
+print('x:',x,'y:',y)
 print(x.shape,y.shape)
 
 x_train,x_test, y_train, y_test = train_test_split(
-    x,y,test_size = 0.2, random_state=337,
+    x,y,test_size = 0.2, 
+    # random_state=337,
     # shuffle=True
 )
 
@@ -407,6 +409,6 @@ submission_csv = pd.read_csv(path +'answer_sample.csv')
 print(submission_csv.shape)
 y_submit = model.predict(true_test)
 submission_csv['PM2.5'] = y_submit
-submission_csv.to_csv(path_save + '0510_KNN_pm.csv',encoding='utf-8')
+submission_csv.to_csv(path_save + '0510_LSTM_TIME.csv',encoding='utf-8')
 print('완료')
 
