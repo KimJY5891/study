@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler
 from sklearn.metrics import r2_score, mean_squared_error,mean_absolute_error
 from sklearn.experimental import enable_iterative_imputer
+
 from sklearn.impute import SimpleImputer, KNNImputer, IterativeImputer
 from xgboost import XGBRegressor
 from sklearn.preprocessing import LabelEncoder
@@ -110,46 +111,52 @@ train_dataset= pd.concat(train_li,axis=0,
 # print(train_dataset)
 print(train_dataset.shape) # (596088, 4)
 
-
-
-sego_train_csv=pd.read_csv(path_train_AWS +'세종고운.csv',encoding='utf-8',index_col=False)
-seyun_train_csv=pd.read_csv(path_train_AWS +'세종연서.csv',encoding='utf-8',index_col=False)
-gyeryong_train_csv=pd.read_csv(path_train_AWS +'계룡.csv',encoding='utf-8',index_col=False)
-Oworld_train_csv=pd.read_csv(path_train_AWS +'오월드.csv',encoding='utf-8',index_col=False)
-jangdong_train_csv=pd.read_csv(path_train_AWS +'장동.csv',encoding='utf-8',index_col=False)
-Oworld_train_csv02=pd.read_csv(path_train_AWS +'오월드.csv',encoding='utf-8',index_col=False)
+#공주
 gongjoo_train_csv=pd.read_csv(path_train_AWS +'공주.csv',encoding='utf-8',index_col=False)
-
+# 노은동
+gyeryong_train_csv=pd.read_csv(path_train_AWS +'계룡.csv',encoding='utf-8',index_col=False)
+# 논산
 nonsan_train_csv=pd.read_csv(path_train_AWS +'논산.csv',encoding='utf-8',index_col=False)
+#대천2동
 deacheon_train_csv=pd.read_csv(path_train_AWS +'대천항.csv',encoding='utf-8',index_col=False)
+#독곶리
 deasan_train_csv=pd.read_csv(path_train_AWS +'대산.csv',encoding='utf-8',index_col=False)
+#동문동
 teaan_train_csv=pd.read_csv(path_train_AWS +'태안.csv',encoding='utf-8',index_col=False)
+#모종동
 asan_train_csv=pd.read_csv(path_train_AWS +'아산.csv',encoding='utf-8',index_col=False)
+#문창동
+Oworld_train_csv=pd.read_csv(path_train_AWS +'오월드.csv',encoding='utf-8',index_col=False)
+#성성동
 sung_train_csv=pd.read_csv(path_train_AWS +'성거.csv',encoding='utf-8',index_col=False)
-yesan_train_csv=pd.read_csv(path_train_AWS +'예산.csv',encoding='utf-8',index_col=False)
-teaan02_train_csv=pd.read_csv(path_train_AWS +'태안.csv',encoding='utf-8',index_col=False)
-aan_train_csv=pd.read_csv(path_train_AWS +'홍북.csv',encoding='utf-8',index_col=False)
+#신방동
 sung02_train_csv=pd.read_csv(path_train_AWS +'성거.csv',encoding='utf-8',index_col=False)
+#신흥동
+seyun_train_csv=pd.read_csv(path_train_AWS +'세종연서.csv',encoding='utf-8',index_col=False)
+#아름동
+sego_train_csv=pd.read_csv(path_train_AWS +'세종고운.csv',encoding='utf-8',index_col=False)
+#예산군
+yesan_train_csv=pd.read_csv(path_train_AWS +'예산.csv',encoding='utf-8',index_col=False)
+#읍내동
+jangdong_train_csv=pd.read_csv(path_train_AWS +'장동.csv',encoding='utf-8',index_col=False)
+#이원면
+teaan02_train_csv=pd.read_csv(path_train_AWS +'태안.csv',encoding='utf-8',index_col=False)
+#정림동
+Oworld_train_csv02=pd.read_csv(path_train_AWS +'오월드.csv',encoding='utf-8',index_col=False)
+#홍성읍
+aan_train_csv=pd.read_csv(path_train_AWS +'홍북.csv',encoding='utf-8',index_col=False)
 
-train_aws_li = [sego_train_csv,seyun_train_csv,
-    gyeryong_train_csv,Oworld_train_csv,
-    jangdong_train_csv,Oworld_train_csv02,
-    gongjoo_train_csv,nonsan_train_csv,
-    deacheon_train_csv,deasan_train_csv,
-    teaan_train_csv,asan_train_csv,
-    sung_train_csv,yesan_train_csv,
-    teaan02_train_csv,aan_train_csv,sung02_train_csv
+train_aws_li = [gongjoo_train_csv,gyeryong_train_csv,
+    nonsan_train_csv,deacheon_train_csv,
+    deasan_train_csv,teaan_train_csv,
+    asan_train_csv,Oworld_train_csv,
+    sung_train_csv,sung02_train_csv,
+    seyun_train_csv,sego_train_csv,
+    yesan_train_csv,jangdong_train_csv,
+    teaan02_train_csv,Oworld_train_csv02,aan_train_csv
 ]
 
-train_aws_dataset = pd.concat([sego_train_csv,seyun_train_csv,
-    gyeryong_train_csv,Oworld_train_csv,
-    jangdong_train_csv,Oworld_train_csv02,
-    gongjoo_train_csv,nonsan_train_csv,
-    deacheon_train_csv,deasan_train_csv,
-    teaan_train_csv,asan_train_csv,
-    sung_train_csv,yesan_train_csv,
-    teaan02_train_csv,aan_train_csv,sung02_train_csv
-], axis=0,ignore_index=True)
+train_aws_dataset = pd.concat( train_aws_li, axis=0,ignore_index=True)
 print(train_aws_dataset.shape)
 ############################# test 폴더 #########################################
 
@@ -164,13 +171,15 @@ test_input_dataset= pd.concat(test_li,axis=0,
                          )
 print(test_input_dataset)
 
+
+gongjoo_test_csv=pd.read_csv(path_test_AWS +'공주.csv',encoding='utf-8',index_col=False)
+
 sego_test_csv=pd.read_csv(path_test_AWS +'세종고운.csv',encoding='utf-8',index_col=False)
 seyun_test_csv=pd.read_csv(path_test_AWS +'세종연서.csv',encoding='utf-8',index_col=False)
 gyeryong_test_csv=pd.read_csv(path_test_AWS +'계룡.csv',encoding='utf-8',index_col=False)
 Oworld_test_csv=pd.read_csv(path_test_AWS +'오월드.csv',encoding='utf-8',index_col=False)
 jangdong_test_csv=pd.read_csv(path_test_AWS +'장동.csv',encoding='utf-8',index_col=False)
 Oworld_test_csv02=pd.read_csv(path_test_AWS +'오월드.csv',encoding='utf-8',index_col=False)
-gongjoo_test_csv=pd.read_csv(path_test_AWS +'공주.csv',encoding='utf-8',index_col=False)
 
 nonsan_test_csv=pd.read_csv(path_test_AWS +'논산.csv',encoding='utf-8',index_col=False)
 deacheon_test_csv=pd.read_csv(path_test_AWS +'대천항.csv',encoding='utf-8',index_col=False)
@@ -183,14 +192,14 @@ teaan02_test_csv=pd.read_csv(path_test_AWS +'태안.csv',encoding='utf-8',index_
 aan_test_csv=pd.read_csv(path_test_AWS +'홍북.csv',encoding='utf-8',index_col=False)
 sung02_test_csv=pd.read_csv(path_test_AWS +'성거.csv',encoding='utf-8',index_col=False)
 
-test_csv_list = [sego_test_csv,seyun_test_csv,
-    gyeryong_test_csv,Oworld_test_csv,
-    jangdong_test_csv,Oworld_test_csv02,
-    gongjoo_test_csv,nonsan_test_csv,
-    deacheon_test_csv,deasan_test_csv,
-    teaan_test_csv,asan_test_csv,
-    sung_test_csv,yesan_test_csv,
-    teaan02_test_csv,aan_test_csv,sung02_test_csv
+test_csv_list = [gongjoo_test_csv,gyeryong_test_csv,
+    nonsan_test_csv,deacheon_test_csv,
+    deasan_test_csv,teaan_test_csv,
+    asan_test_csv,Oworld_test_csv,
+    sung_test_csv,sung02_test_csv,
+    seyun_test_csv,sego_test_csv,
+    yesan_test_csv,jangdong_test_csv,
+    teaan02_test_csv,Oworld_test_csv02,aan_test_csv
 ]
 
 for v in test_csv_list:
@@ -307,7 +316,7 @@ imputer = IterativeImputer(estimator=XGBRegressor(
         n_jobs = -1,                        
         tree_method='gpu_hist',
         predictor='gpu_predictor',
-        gpu_id=0
+        gpu_id=0,
     )) # knn알고리즘으로 평균값을 찾아낸 것이다. 
 # train_dataset = train_dataset.interpolate(order=2)
 # train_aws_dataset = train_aws_dataset.interpolate(order=2)
@@ -324,11 +333,11 @@ data_col = ['PM2.5', '연도', '기온(°C)', '풍향(deg)', '풍속(m/s)', '강
 train_all_dataset = pd.DataFrame(train_all_dataset,columns=data_col)
 test_all_dataset= pd.DataFrame(test_all_dataset,columns=data_col)
 imputer_end = time.time()
+print('imputer_time : ',round(imputer_end-imputer_start,2))
 
 # true_test 모으기 
 true_test_list = []
 a = 48
-print('imputer_time : ',round(imputer_end-imputer_start,2))
 for i in range(1088) : # 3일치가 1088묶음으로 있다. 
     true_test_list.append(
         test_all_dataset[a + 48:a + 120] # 3일치
@@ -343,7 +352,7 @@ print('len(true_test) : ',len(true_test)) # 78264
 y = train_all_dataset['PM2.5']
 x = train_all_dataset.drop(['PM2.5'],axis=1)
 x_train,x_test, y_train, y_test = train_test_split(
-    x,y,test_size = 0.2, # random_state=337,
+    x,y,test_size = 0.2, random_state=337,
     # shuffle=True
 )
 
@@ -353,17 +362,52 @@ scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
+XGBparameter = {
+    # "n_estimators" : [100,200,300,400,500,600], # 디폴트 100 / 1 ~ inf / 정수
+    # "learning_rate" : [0.1,0.2,0.3,0.5,1,0.01,0.001], # 디폴트 0.3 / 0 ~ 1 / eta
+    # "max_depth" : [None,2,3,4,5,6,7,8,9,10], # 디폴트 6 / 0 ~ inf / 정수
+    # "gamma" : [0,1,2,3,4,5,7,8,9,10], # 디폴트 0 / 0 ~ inf 
+    # "min_child_weight" : [0,0.1,0.01,0.001,0.5,1,5,10,100], # 디폴트 1 / 0 ~ inf 
+    # "subsample" : [0,0.1,0.2,0.3,0.5,0.7,1], # 디폴트 1 / 0 ~ 1 
+    # "colsample_bytree" : [0,0.1,0.2,0.3,0.5,0.7,1], # 디폴트 / 0 ~ 1 
+    # "colsample_bylevel":[0,0.1,0.2,0.3,0.5,0.7,1], # 디폴트 / 0 ~ 1 
+    # "colsample_bynode":[0,0.1,0.2,0.3,0.5,0.7,1], # 디폴트 / 0 ~ 1 
+    # "reg_alpha":[0,0.1,0.01,0.001,1,2,10], # 디폴트 0 / 0 ~ inf / L1 절대값 가중치 규제 / alpha
+    # "reg_lambda":[0,0.1,0.01,0.001,1,2,10], # 디폴트 1 / 0 ~ inf / L2 제곱 가중치 규제 / lambda
+}
+
+KNNparameter = {
+    "n_neighbors" : [1,2,3,4,5,6,7,8,9,10,
+                    #  11,12,14,18,20,26,32,
+                     40
+                     ],
+    'weights' : ['distance','uniform'],
+    'algorithm' : ['auto','ball_tree','kd_tree','brute'],
+    'leaf_size' : [1,2,4,8,16,32,64,100],
+}
 
 #2. 모델 
 print('KNeighborsRegressor')
 start= time.time()
-model = KNeighborsRegressor(n_neighbors=10,weights='distance')
+from sklearn.model_selection import KFold, StratifiedKFold, GridSearchCV, RandomizedSearchCV
+KNN= KNeighborsRegressor(**KNNparameter)
+model = GridSearchCV(
+    KNN,
+    param_grid=KNNparameter,
+    # cv=5,
+    verbose=1,
+    n_jobs=-1
+)
 
 
 #3. 훈련 
 
 print('훈련')
 model.fit(x_train,y_train)
+print("최적의 매개변수 : ",model.best_estimator_) 
+print("최적의 파라미터 : ",model.best_params_)
+print("best_score_ : ",model.best_score_) # train의 베스트 스코어 
+print("model.score : ",model.score(x_test,y_test))
 end= time.time()
 print('걸린 시간 : ',round(end -start,2),'초')
 
@@ -378,7 +422,8 @@ r2 = r2_score(y_test,y_pred)
 print('r2 : ',r2)
 mae = mean_absolute_error(y_test,y_pred)
 print('mae : ',mae)
-
+y_pred_best= model.best_estimator_.predict(x_test)
+print('최적의 튠  r2_score : ',r2_score(y_test,y_pred_best))
 
 # 5. 제출
 print('제출')
@@ -391,11 +436,9 @@ submission_csv = pd.read_csv(path +'answer_sample.csv')
 print(submission_csv.shape)
 y_submit = model.predict(true_test)
 submission_csv['PM2.5'] = y_submit
-submission_csv.to_csv(path_save + '0502_01.csv',encoding='utf-8')
+submission_csv.to_csv(path_save + '0510_KNN_pm.csv',encoding='utf-8')
 print('완료')
 
 '''
-model.score :  0.5816876365740518
-r2 :  0.5816876365740518
-mae :  0.03087302806661622
+
 '''
