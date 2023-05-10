@@ -1,5 +1,5 @@
 ################# 제출 단계에서 오류 남 ####################
-################# 열 관련해서 전처리 다시 해야 함 ####################
+
 
 import math
 import numpy as np
@@ -216,8 +216,21 @@ test_aws_dataset = pd.concat([
 # 12-31 21 : 00 / 12와 21 추출 
 # (596088, 4) (1051920, 8) (131376, 4) (131376, 8)
 train_dataset = train_dataset.drop(['일시','연도'],axis=1)
+train_aws_dataset = train_aws_dataset.drop(['지점'],axis=1)
 train_all_dataset = pd.concat([train_dataset,train_aws_dataset],axis=1)
-print(train_all_dataset)
+print(train_all_dataset.columns)
+test_input_dataset = test_input_dataset.drop(['일시','연도'],axis=1)
+test_aws_dataset = test_aws_dataset.drop(['지점'],axis=1)
+test_all_dataset = pd.concat([test_input_dataset,test_aws_dataset],axis=1)
+print(test_all_dataset.columns)
+'''
+Index(['측정소', 'PM2.5', '연도', '일시', '지점', '기온(°C)', '풍향(deg)', '풍속(m/s)',
+       '강수량(mm)', '습도(%)'],
+      dtype='object')
+Index(['측정소', 'PM2.5', '연도', '일시', '지점', '기온(°C)', '풍향(deg)', '풍속(m/s)',
+       '강수량(mm)', '습도(%)'],
+      dtype='object')
+'''
 
 
 # 12-31 21 : 00 / 12와 21 추출 
@@ -251,47 +264,47 @@ train_all_dataset['month'] = train_all_dataset['month'].astype('Int16')
 train_all_dataset['day'] = train_all_dataset['day'].astype('Int16')
 train_all_dataset['hour'] = train_all_dataset['hour'].astype('Int16')
 
-test_input_dataset= test_input_dataset.drop(['일시'],axis=1)
+test_all_dataset['month'] = test_all_dataset['일시'].str[:2]
+test_all_dataset['day'] = test_all_dataset['일시'].str[3:5]
+test_all_dataset['hour'] = test_all_dataset['일시'].str[6:8]
+test_all_dataset['month'] = test_all_dataset['month'].astype('Int16')
+test_all_dataset['day'] = test_all_dataset['day'].astype('Int16')
+test_all_dataset['hour'] = test_all_dataset['hour'].astype('Int16')
 
-test_aws_dataset['month'] = test_aws_dataset['일시'].str[:2]
-test_aws_dataset['day'] = test_aws_dataset['일시'].str[3:5]
-test_aws_dataset['hour'] = test_aws_dataset['일시'].str[6:8]
-test_aws_dataset['month'] = test_aws_dataset['month'].astype('Int16')
-test_aws_dataset['day'] = test_aws_dataset['day'].astype('Int16')
-test_aws_dataset['hour'] = test_aws_dataset['hour'].astype('Int16')
-
-test_aws_dataset= test_aws_dataset.drop(['일시'],axis=1)
+test_all_dataset= test_all_dataset.drop(['일시'],axis=1)
 
 
 ############################# 라벨 인코더 #########################################
 
 le=LabelEncoder()
-train_all_dataset['locate'] = le.fit_transform(train_all_dataset['지점'])
-test_aws_dataset['locate'] = le.transform(test_aws_dataset['지점'])
-test_input_dataset['locate02']= le.fit_transform(test_input_dataset['측정소'])
+train_all_dataset['locate'] = le.fit_transform(train_all_dataset['측정소'])
+test_all_dataset['locate'] = le.transform(test_all_dataset['측정소'])
+
 
 
 # train_dataset= train_dataset.drop(['측정소'],axis=1)
-train_all_dataset= train_all_dataset.drop(['지점','측정소'],axis=1)
-test_aws_dataset= test_aws_dataset.drop(['지점'],axis=1)
-y = train_all_dataset['PM2.5']
-x = train_all_dataset.drop(['PM2.5'],axis=1)
-y = y.values.reshape(y.shape[0],1)
+train_all_dataset= train_all_dataset.drop(['측정소'],axis=1)
+test_all_dataset= test_all_dataset.drop(['측정소'],axis=1)
+
+
 print('결측치')
 print(train_all_dataset.shape,train_dataset.shape,train_aws_dataset.shape,test_input_dataset.shape,test_aws_dataset.shape)
 print(train_all_dataset)
-print(test_aws_dataset.columns)
-print(train_all_dataset.columns)
-print(x.columns)
+print('test_all_dataset : ',test_all_dataset.columns)
+print('train_all_dataset : ',train_all_dataset.columns)
 '''
-Index(['연도', '기온(°C)', '풍향(deg)', '풍속(m/s)', '강수량(mm)', '습도(%)', 'month',
-       'day', 'hour', 'locate'],
-      dtype='object')
-Index(['PM2.5', '연도', '기온(°C)', '풍향(deg)', '풍속(m/s)', '강수량(mm)', '습도(%)',
+test_all_dataset :  Index(['PM2.5', '연도', '기온(°C)', '풍향(deg)', '풍속(m/s)', '강수량(mm)', '습도(%)',
        'month', 'day', 'hour', 'locate'],
       dtype='object')
+train_all_dataset :  Index(['PM2.5', '연도', '기온(°C)', '풍향(deg)', '풍속(m/s)', '강수량(mm)', '습도(%)',
+       'month', 'day', 'hour', 'locate'],
+      dtype='object')
+
 '''
 
+true_test = test_all_dataset[test_all_dataset['PM2.5'].isnull()].drop('PM2.5',axis=1).copy()
+
+imputer_start = time.time()
 ############################# 결측치 처리 #########################################
 imputer = IterativeImputer(estimator=XGBRegressor(
         n_jobs = -1,                        
@@ -302,15 +315,23 @@ imputer = IterativeImputer(estimator=XGBRegressor(
 # train_dataset = train_dataset.interpolate(order=2)
 # train_aws_dataset = train_aws_dataset.interpolate(order=2)
 # test_aws_dataset = test_aws_dataset.interpolate(order=2)
-x = imputer.fit_transform(x)
-test_aws_dataset = imputer.transform(test_aws_dataset)
-y = imputer.fit_transform(y)
+train_all_dataset = imputer.fit_transform(train_all_dataset)
+test_all_dataset = imputer.transform(test_all_dataset)
+print('test_all_dataset : ',test_all_dataset)
+print('train_all_dataset : ',train_all_dataset)
 # for i in imputer_list : 
 #     train_aws_dataset[i] = imputer.transform(train_aws_dataset[i])
 #     test_aws_dataset[i] = imputer.transform(test_aws_dataset[i])
+data_col = ['PM2.5', '연도', '기온(°C)', '풍향(deg)', '풍속(m/s)', '강수량(mm)', '습도(%)',
+       'month', 'day', 'hour', 'locate']
+train_all_dataset = pd.DataFrame(train_all_dataset,columns=data_col)
+test_all_dataset= pd.DataFrame(test_all_dataset,columns=data_col)
+imputer_end = time.time()
 
-print('x,y')
-y = y.reshape(y.shape[0],)
+print('imputer_time : ',round(imputer_end-imputer_start,2))
+
+y = train_all_dataset['PM2.5']
+x = train_all_dataset.drop(['PM2.5'],axis=1)
 x_train,x_test, y_train, y_test = train_test_split(
     x,y,test_size = 0.2, # random_state=337,
     # shuffle=True
@@ -321,20 +342,6 @@ print('RobustScaler')
 scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
-#### 1. 데이터
-path_np_save = 'c:/study_data/_save/_npy/'
-# path = 'd:/study_data/_save/_npy/'
-
-x_train = np.load(path_np_save+'XGB_data_save_x_train.npy')
-y_train = np.load(path_np_save+'XGB_data_save_y_train.npy')
-x_test = np.load(path_np_save+'XGB_data_save_x_test.npy')
-y_test = np.load(path_np_save+'XGB_data_save_y_test.npy')
-# print('y_train : ', np.isnan(y_train).sum(axis=0))
-# print('y_test : ', np.isnan(y_test).sum(axis=0))
-# print('y_train : ', np.isinf(y_train).sum(axis=0))
-# print('y_test : ', np.isinf(y_test).sum(axis=0))
-
-
 
 
 #2. 모델 
@@ -361,17 +368,16 @@ mae = mean_absolute_error(y_test,y_pred)
 print('mae : ',mae)
 
 
-
 # 5. 제출
 
-true_test = test_aws_dataset[test_input_dataset['PM2.5'].isnull()].drop('PM2.5',axis=1)
-print(true_test.head())
-print(true_test.shape) # (78336, 4)
+print(true_test.head(50))
+print(true_test.shape)
 
 submission_csv = pd.read_csv(path +'answer_sample.csv')
 print(submission_csv.shape)
 y_submit = model.predict(true_test)
 submission_csv['PM2.5'] = y_submit
 submission_csv.to_csv(path_save + '0502_01.csv',encoding='utf-8')
+
 
 
