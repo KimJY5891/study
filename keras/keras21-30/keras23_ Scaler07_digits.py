@@ -18,8 +18,6 @@ print(datasets.feature_names) # 판다스 clolums
 x=datasets['data']
 y=datasets.target
 print('shape :',x.shape,y.shape) #(178, 13) (178,)
-print(x)
-print(y) 
 print("y의 라벨 값 :",np.unique(y))
 y = to_categorical(y)
 x_train, x_test, y_train, y_test = train_test_split(
@@ -28,6 +26,7 @@ x_train, x_test, y_train, y_test = train_test_split(
     shuffle=True,random_state=456,
     stratify= y 
 )
+
 ###scaler###
 #scaler =StandardScaler()
 #scaler=MinMaxScaler()
@@ -90,3 +89,4 @@ scaler = RobustScaler()
 result :  [0.2752344608306885, 0.9388889074325562]
 acc :  0.9305555555555556
 """
+# MinMaxScaler 
