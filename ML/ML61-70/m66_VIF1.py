@@ -14,7 +14,8 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 # 코릴레이션과 비슷하다. 
 # 두 개의 컬럼이 상관도가 너무 높다. -> 제거 혹은 차원 축소 
 # 무조건 제거가 좋은 것이 아니다. 살려보고 싶을 경우 차원축소도 가능하다. 
-# 코릴레이션과 같이 사용하면 된다. 
+# 코릴레이션과 같이 사용하면 된다.
+# 다중공선성 확인을 위해서는 스케일링을 먼저 해준다.(컬런이 다르면 값들의 차이가 크기 때문에)
 data={'size':[30,35,40,45,50,45],
       'rooms' : [2,2,3,3,4,3],
       'window' : [2,2,3,3,4,3],
@@ -27,7 +28,7 @@ print(df)
 
 x = df[['size','window','rooms','year']]
 y = df['price']
-scaler = StandardScaler()
+scaler = StandardScaler() # 다중공선성은 통상 스탠다드 스케일러 사용한다
 x_scaled = scaler.fit_transform(x)
 print(x_scaled)
 
@@ -44,15 +45,19 @@ print(vif)
 '''
 # for의 값이 aaa에 들어간다. 
 # for i in range(x_scaled.shape[1]) : # 컬럼의 갯수
-# 19이하일 대 다중 공성성이 높지 않다고 판단한다. 
+# 10이하일 대 다중 공성성이 높지 않다고 판단한다. 
 # 다 10초과로 높을 때 하나씩 줄여서 판단하기
+#현 데이터는 다중공선성이 너무 높다. 
+#이럴경우 가장 높은 컬런부터 제거해본다.
 
 print("================== rooms 제거 전 =====================")
 lr = LinearRegression()
 lr.fit(x_scaled,y)
 y_pred = lr.predict(x_scaled)
 r2 = r2_score(y,y_pred)
-print('r2:',r2) # r2: 0.9938931297709924
+print('r2:',r2)
+
+# r2: 0.9938931297709924
 
 print("================== rooms 제거 =====================")
 x_scaled = df[['size','window','year']]
@@ -73,9 +78,8 @@ print('r2:',r2)
 2      year   56.881874
 r2: 0.9938931297709941
 '''
-# ValueError: Length of values (2) does not match length of index (3) 컬럼이 두 개라서 다중공선성 계산이 안된다. 
-print("================== 사이즈 제거 =====================")
+# ValueError: Length of values (2) does not match length of index (3) 
+# 컬럼이 두 개라서 다중공선성 계산이 안된다. 
 
-print("================== year 제거 =====================")
 
 
