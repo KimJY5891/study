@@ -12,8 +12,8 @@ from sklearn.preprocessing import MaxAbsScaler, RobustScaler
 
 #2. 모델 
 model= Sequential()
-#model.add(LSTM(10,2,input_shape=(3,1))) #토탈 파람스 : 541
-model.add(Conv1D(10,2,input_shape=(3,1)))  #토탈 파람스 : 141
+#model.add(LSTM(10,2,input_shape=(3,1))) #Total params : 541
+model.add(Conv1D(10,2,input_shape=(3,1)))  #Total params : 141
 model.add(Conv1D(10,2)) #토탈 파람스 : 301
 
 model.add(Flatten())
@@ -23,4 +23,8 @@ model.summary()
 '''
 model.add(Conv1D(10,2,input_shape=(3,1)))
 Conv1D -> 3차원 
+속도는 LSTM보다 Conv1D
+#3차원 데이터 받아들임 => 특성을 추출하는 역할
+#LSTM보다 Total Params양이 더 적기 때문에 Conv1D가 속도 더 빠름 
+#Conv2D와 Conv1D 성능 유사, 더 좋을 수도 있음 
 '''
