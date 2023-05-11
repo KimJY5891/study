@@ -15,13 +15,8 @@ print(type(x))
 x_train, x_test, y_train, y_test = train_test_split(
     x,y,train_size=0.8,random_state=333    
 )
+
 scaler = StandardScaler()
-#scaler = MinMaxScaler()
-#scaler = MaxAbsScaler()
-#scaler = RobustScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-#위에 두개를 합친것
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 print(np.min(x_train),np.max(x_train))#0.0 1.0
@@ -43,16 +38,19 @@ demse03 = Dense(10)(demse02)
 output01 = Dense(1)(demse03)
 #함수형 모델 
 model = Model(inputs=input01,outputs=output01)
-#model.save('./_save/keras26_1_save_model.h5')
+# model.save('./_save/keras26_1_save_model.h5')
+# 여기서 저장된 경우, 초기화된 가중치(학습된 가중치가 없다.)를 갖는 초기 모델이 저장된다. 
+# 노드, 파라미터, 사용한 모델 등 저 모델 코드만 저장되는 것이다. 
 
-
-#컴파일
+#3. 컴파일,훈련
 model.compile(loss='mse',optimizer='adam')
 from tensorflow.python.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss',patience=100,mode='min',verbose=1,
                    restore_best_weights=True)
 model.fit(x_train,y_train,epochs=1220,batch_size=72,callbacks=[es])
 model.save('./_save/keras26_3_save_model.h5')
+# 컴파일, 훈련 이후  학습된 가중치와 옵티마이저 상태를 갖는 훈련된 모델이 저장된다. 
+
 """
 #4.평가,예측
 loss=model.evaluate(x_test,y_test)
