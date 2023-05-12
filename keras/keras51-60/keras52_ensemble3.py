@@ -1,9 +1,11 @@
+import numpy as np
 from tensorflow.keras.utils import to_categorical
 from tensorflow.python.keras.layers import Dense,Input, Conv1D,Flatten
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import r2_score, mean_squared_error 
+
+
 # 1. 데이터
-import numpy as np
 
 x1_datasets = np.array([range(100),range(301,401)]) # 예를 들어 삼성, 아모레 주가
 x2_datasets = np.array([range(101,201),range(411,511),range(150,250)])# 온도 습도 강수량 
@@ -24,11 +26,11 @@ print(x3.shape) # (100,3)
 y1 = np.array(range(2001,2101)) #환율
 y2 = np.array(range(1001,1101)) #금리
 
-from sklearn.model_selection import train_test_split
-
-x1_train, x1_test, x2_train, x2_test, x3_train, x3_test, y1_train, y1_test,y2_train, y2_test  = train_test_split(
+x1_train, x1_test, x2_train, x2_test, x3_train, x3_test,\
+y1_train, y1_test,y2_train, y2_test  = train_test_split(
     x1, x2,x3,y1,y2, train_size=0.7, random_state=333
-) # 역슬래시 하면 두줄이 한 줄이다. 
+) # 역슬래시(\) 하면 두줄이 한 줄이다. 
+
 print('x1_train.shape : ', x1_train.shape,'x1_test.shape : ',x1_test.shape) #x1_train.shape :  (70, 2) x1_test.shape :  (30, 2)
 print('x2_train.shape : ', x2_train.shape,'x2_test.shape : ',x2_test.shape) #x2_train.shape :  (70, 3) x2_test.shape :  (30, 3)
 print('x2_train.shape : ', x3_train.shape,'x2_test.shape : ',x3_test.shape) #x2_train.shape :  (70, 3) x2_test.shape :  (30, 3)
