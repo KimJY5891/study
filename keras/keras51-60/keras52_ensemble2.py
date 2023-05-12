@@ -1,10 +1,11 @@
+import numpy as np
 from tensorflow.keras.utils import to_categorical
 from tensorflow.python.keras.layers import Dense,Input, Conv1D,Flatten
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import r2_score, mean_squared_error 
-# 1. 데이터
-import numpy as np
 
+
+# 1. 데이터
 x1_datasets = np.array([range(100),range(301,401)]) # 예를 들어 삼성, 아모레 주가
 x2_datasets = np.array([range(101,201),range(411,511),range(150,250)])# 온도 습도 강수량 
 x3_datasets = np.array([range(201,301),range(511,611),range(1300,1400)])# 온도 습도 강수량 
@@ -21,8 +22,6 @@ print(x2.shape) # (100,3)
 print(x3.shape) # (100,3)
 
 y = np.array(range(2001,2101)) # 환율 
-
-from sklearn.model_selection import train_test_split
 
 x1_train, x1_test, x2_train, x2_test,  x3_train, x3_test,y_train, y_test  = train_test_split(
     x1, x2,x3,y, train_size=0.7, random_state=333
