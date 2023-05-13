@@ -1,7 +1,17 @@
+'''
+
+리스트는 파이썬의 기본장료형으로 문자와 숫자형이 같이 있을 수 있어서 행렬로 볼 수없다. 
+전부 다 수치라면 리스트에 넘파이에 넣어서 쉐이프로 볼 수 있다. 
+
+스코어를 합쳤다.
+
+'''
+
 from tensorflow.keras.utils import to_categorical
 from tensorflow.python.keras.layers import Dense,Input, Conv1D,Flatten
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import r2_score, mean_squared_error 
+
 # 1. 데이터
 import numpy as np
 
@@ -117,7 +127,7 @@ print(y_predict.shape)
 rmse_score01 = rmse(y1_test,y_predict[0])
 rmse_score02 = rmse(y2_test,y_predict[1])
 rmse_score = (rmse_score01+rmse_score01)/2
-# print('rmse스코어 : ',rmse_score)
+
 print('rmse_score01스코어 : ',rmse_score01)
 print(' rmse_score02 스코어 : ',rmse_score02)
 print(' rmse 스코어 : ',rmse_score)
@@ -128,11 +138,4 @@ r2=(r2_01+r2_02)/2
 print('r2_01스코어 : ',r2_01)
 print('r2_02스코어 : ',r2_02)
 print('r2스코어 : ',r2)
-'''
 
-리스트는 파이썬의 기본장료형으로 문자와 숫자형이 같이 있을 수 있어서 행렬로 볼 수없다. 
-전부 다 수치라면 리스트에 넘파이에 넣어서 쉐이프로 볼 수 있다. 
-
-스코어를 합쳤다.
-
-'''
