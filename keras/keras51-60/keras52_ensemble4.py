@@ -2,6 +2,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.python.keras.layers import Dense,Input, Conv1D,Flatten
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import r2_score, mean_squared_error 
+
 # 1. 데이터
 import numpy as np
 
@@ -16,6 +17,7 @@ x1 = np.transpose(x1_datasets)
 # x2 = x2_datasets.T
 # x3 = x3_datasets.T
 # 엑스를 하나로 만들어서 수정 
+
 print(x1.shape) # (100,2)
 # print(x2.shape) # (100,3)
 # print(x3.shape) # (100,3)
