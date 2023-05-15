@@ -9,10 +9,12 @@ print(tf.executing_eagerly()) # False
 aaa = tf.constant('hello world')
 tf.compat.v1.disable_eager_execution() # 즉시 실행모드를 꺼라
 print(tf.executing_eagerly()) # False 
-tf.compat.v1.enable_eager_execution() # 즉시 실행모드를 꺼라
-print(tf.executing_eagerly()) # True 
+# tf.compat.v1.enable_eager_execution() # 즉시 실행모드(=파이썬 방식)를 켜라 
+# ValueError: tf.enable_eager_execution must be called at program startup.
+# import 다음 가장 첫 줄에 작성되어야한다. 
+# print(tf.executing_eagerly()) # True 
 sess = tf.compat.v1.Session()
-print(sess.run(aaa))
+print(sess.run(aaa)) # b'hello world'
 # 1버전 : sess.run(aaa) => b'hello world'
 # 2버전 -> RuntimeError: The Session graph is empty. Add operations to the graph before calling run().
 # => sess.run() 아예 사라짐
