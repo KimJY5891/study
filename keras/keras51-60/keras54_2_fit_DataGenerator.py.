@@ -85,7 +85,6 @@ print('val_acc : ',val_acc[-1]) # 최종값
 
 # 4. 평가 예측
 
-
 import matplotlib.pyplot as plt
 # subplot 생성
 fig = plt.figure(figsize=(8, 6))
