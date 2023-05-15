@@ -33,5 +33,3 @@ for step in range(epochs) :
         # 
 sess.close()
 
-# 4. 평가 예측
-
