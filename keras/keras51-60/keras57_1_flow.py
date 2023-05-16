@@ -56,8 +56,3 @@ for i in range(49) :
     plt.axis('off') # 모든 축과 
     plt.imshow(x_data[0][0][i],cmap='gray')
 plt.show()
-
-
-
- 
- 
