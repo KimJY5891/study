@@ -3,20 +3,8 @@ tf.compat.v1.set_random_seed(337)
 
 # 1. 데이터
 
-x_data = [
-    [1,2],
-    [2,3],
-    [3,1],
-    [4,3],
-    [5,3],
-    [6,2]
-    ] # (6,2)
-y_data  = [[0],
-           [0],
-           [0],
-           [1],
-           [1],
-           [1],] # (6,1)
+x_data = [[1,2],[2,3], [3,1],[4,3], [5,3],[6,2]] # (6,2)
+y_data  = [[0],[0], [0],[1],[1],[1]] # (6,1)
 
 ##############################################
 #[실습] 시그모이드 빼고 그냥 만들어보기! 
@@ -62,10 +50,20 @@ y_aaa = sess.run(y_pred,feed_dict={x_test:x_data})  # 텐서 형태
 # 그래서 다른 데이터 타입이라서 서로 타입을 맞게 만들어야한다. 
 # sessrun을 통과하면 넘파이 형태로 변화한다. 
 
-r2 = r2_score(y_aaa,y_pred)
+r2 = r2_score(y_data,y_aaa)
 print('r2 : ',r2)
-mae = mean_absolute_error(y_aaa,y_pred)
+mae = mean_absolute_error(y_data,y_aaa)
 print('mae : ',mae)
 sess.close()
+'''
+Epoch: 0 Loss: 6.751091 
+Epoch: 20 Loss: 6.717108
+Epoch: 40 Loss: 6.681952
+Epoch: 60 Loss: 6.646135
+Epoch: 80 Loss: 6.6097636
+Epoch: 100 Loss: 6.5728817
+r2 :  -25.28410071316523
+mae :  2.5153388579686484
 
+'''
 
