@@ -4,7 +4,7 @@ from tensorflow.python.keras.layers import Dense,Input, Conv1D,Flatten
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import r2_score, mean_squared_error 
 # fit으로 사용할거면 flow from 디렉토리로 던질 필요가 없다. 
-#
+
 #1. 데이터 
 
 traindatagen=ImageDataGenerator(
@@ -22,8 +22,7 @@ testdatagen=ImageDataGenerator(
     rescale=1./255,
 )
 xy_train = traindatagen.flow_from_directory(
-    'c:/study_data/_data/brain/train/',
-    #'d:/study_data/_data/brain/train/',
+    'd:/study_data/_data/brain/train/',
     target_size= (100,100), 
     batch_size=5, 
     class_mode='binary',
@@ -31,8 +30,7 @@ xy_train = traindatagen.flow_from_directory(
     shuffle=True
 ) 
 xy_test = testdatagen.flow_from_directory(
-    'c:/study_data/_data/brain/test/',
-    #'d:/study_data/_data/brain/test/',
+   'd:/study_data/_data/brain/test/',
     target_size= (100,100), 
     batch_size=5,
     class_mode='binary',
@@ -85,8 +83,6 @@ print('val_acc : ',val_acc[-1])
 
 
 # 4. 평가 예측
-
-
 import matplotlib.pyplot as plt
 fig = plt.figure(figsize=(8, 6))
 
