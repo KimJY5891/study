@@ -2,6 +2,8 @@ from tensorflow.keras.datasets import fashion_mnist
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 np.random.seed(333)
+
+# 1. 데이터
 (x_train,y_train), (x_test,y_test) = fashion_mnist.load_data()
 train_datagen = ImageDataGenerator(
      rescale=1./255, 
@@ -15,6 +17,7 @@ train_datagen = ImageDataGenerator(
     fill_mode='nearest' 
 ) 
 augment_size = 40000
+# augment_size : 얼마나 증폭시킬지 정하는 사이즈 
 # print(x_train.shape) #(60000, 28, 28)
 # print(x_train[0].shape) # (28, 28) 
 # print(x_train[1].shape) # (28, 28)
