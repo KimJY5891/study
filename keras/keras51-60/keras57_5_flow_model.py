@@ -4,11 +4,10 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten
 from tensorflow.keras.utils import to_categorical
-# 1. 데이터 
-
 np.random.seed(333)
-(x_train,y_train), (x_test,y_test) = fashion_mnist.load_data()
 
+# 1. 데이터 
+(x_train,y_train), (x_test,y_test) = fashion_mnist.load_data()
 
 train_datagen = ImageDataGenerator(
      rescale=1./255, 
