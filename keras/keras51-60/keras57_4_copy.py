@@ -49,12 +49,11 @@ print(x_augmented)
 print(x_augmented[0][0].shape)#(40000, 28, 28, 1) 
 print(x_augmented[0][1].shape)#(40000,)
 '''
-# 2. 넥스트로사용 방법 
+# 2. 넥스트로 사용 방법 
 
 x_augmented = train_datagen.flow(
     x_augmented, y_augmented, 
-    batch_size=augment_size,
-    # 통사이즈
+    batch_size=augment_size, # 통사이즈
     shuffle=True
 ).next()[0]
 # next()[0]을 해야 x_augmented[0][0]이 나온다.
@@ -69,16 +68,14 @@ print(np.min(x_train),np.max(x_train))#255. 0.
 print(np.min(x_augmented),np.max(x_augmented))# 1. 0.
 print(x_train.shape) #(60000, 28, 28, 1)
 print(x_augmented.shape) #(40000, 28, 28, 1)
-# 아규먼티드는 스케일링이 되어있고 x트레인과 엑스 테스트은 스케일링이 안되어잇다. 
-# 와이는 스케일링하면 안되어있다.
+# x_augmented 스케일링이 되어있고 x_train과 max test은 스케일링이 안되어잇다. 
+# y는 스케일링하면 안되어있다.
 
 
 x_train = np.concatenate((x_train, x_augmented), axis=0)
 y_train = np.concatenate((y_train, y_augmented), axis=0)
-#사슬 처럼 엮다.
+# concatenate : 사슬 처럼 엮다.
 
 print(x_train) 
 print(x_train.shape)
-'''
 
-'''
