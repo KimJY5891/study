@@ -6,10 +6,11 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten
 from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import r2_score, accuracy_score
+np.random.seed(333)
+
 
 # 1. 데이터 
-batch_size = 64
-np.random.seed(333)
+
 (x_train,y_train), (x_test,y_test) = fashion_mnist.load_data()
 train_datagen = ImageDataGenerator(
      rescale=1./255, 
@@ -46,10 +47,10 @@ print(x_train.shape,x_test.shape,x_augmented.shape)
 #(60000, 28, 28, 1) (10000, 28, 28, 1) (40000, 28, 28, 1)
 
 # 변환 
+batch_size = 64
 x_augmented = train_datagen.flow(
     x_augmented, y_augmented, 
-    batch_size=augment_size,
-    # 통사이즈
+    batch_size=augment_size,# 통사이즈
     shuffle=False
 ).next()[0]
 
