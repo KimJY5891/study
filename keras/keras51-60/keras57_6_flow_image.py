@@ -6,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten
 from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import r2_score, accuracy_score
+
 # 1. 데이터 
 
 np.random.seed(333)
