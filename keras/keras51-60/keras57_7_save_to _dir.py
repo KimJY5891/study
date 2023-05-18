@@ -3,11 +3,10 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import time 
 
-# 1. 데이터 
 np.random.seed(333)
+
+# 1. 데이터 
 (x_train,y_train), (x_test,y_test) = fashion_mnist.load_data()
-
-
 train_datagen = ImageDataGenerator(
      rescale=1./255, 
     horizontal_flip=True, 
@@ -22,7 +21,6 @@ train_datagen = ImageDataGenerator(
 augment_size = 100
 
 randidx = np.random.randint(x_train.shape[0],size=augment_size)
-# 랜덤하게 육만개에서 4만개 뽑겟다.
 print(randidx) #[43351 14109 56941 ... 12193 12719 15038]
 print(randidx.shape) # (40000,)
 print(np.min(randidx),np.max(randidx)) # min : 0 59998
@@ -40,7 +38,7 @@ print(x_train.shape,x_test.shape,x_augmented.shape)
 #(60000, 28, 28, 1) (10000, 28, 28, 1) (40000, 28, 28, 1)
 start= time.time()
 
-# 변환 
+# 증폭
 x_augmented = train_datagen.flow(
     x_augmented, y_augmented, 
     batch_size=augment_size,
