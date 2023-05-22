@@ -1,8 +1,5 @@
+import numpy as np
 from keras.preprocessing.text import Tokenizer
-import numpy as np
-from tensorflow.keras.datasets import fashion_mnist
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, LSTM, Reshape,Embedding
 from tensorflow.keras.utils import to_categorical
@@ -101,4 +98,4 @@ acc = model.evaluate(pad_x,label)[1]  # 로스와 매트릭스 값이 들어간�
 print('acc : ',acc )
 
 y_pred = np.round(model.predict(x_predict))
-print(y_pred) #[[1.]]
+print(y_pred) #[[1.]] 
