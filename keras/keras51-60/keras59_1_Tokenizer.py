@@ -1,9 +1,9 @@
-from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy as np
+from tensorflow.keras.preprocessing.text import Tokenizer
+
 text = '나는 진짜 매우 매우 맛잇는 밥을 엄청 마구 마구 마구 먹었다.'
-# 띄어 쓰기 잖아 음절
-# 컴퓨터가 인식하기 위해서는 수치화 
-# 텍스트도 인식하게 하기 위해서 수치화
+# 띄어 쓰기잖아 -> 음절
+# 컴퓨터가 텍스트를 인식하기 위해서는 수치화 해줘야함
 
 token = Tokenizer()
 # 전처리 
