@@ -1,8 +1,5 @@
+import numpy as np
 from keras.preprocessing.text import Tokenizer
-import numpy as np
-from tensorflow.keras.datasets import fashion_mnist
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, LSTM, Reshape
 from tensorflow.keras.utils import to_categorical
@@ -44,7 +41,7 @@ print('x : ',x)
 # 그래서 0은 앞으로 채워야 한다.
 
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-# 순서가 있는 놈의  패드를 채운다는걸로 
+# 순서가 있는 놈의  패드를 채운다
 
 pad_x = pad_sequences(
     x,
