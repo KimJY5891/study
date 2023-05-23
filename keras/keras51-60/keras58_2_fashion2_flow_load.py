@@ -1,5 +1,3 @@
-from tensorflow.keras.datasets import fashion_mnist
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten
