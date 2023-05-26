@@ -1,6 +1,6 @@
 import numpy as np
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN,Dropout
+from tensorflow.keras.layers import Dense, SimpleRNN, Dropout
 
 # 1. 데이터
 datasets = np.array([1,2,3,4,5,6,7,8,9,10])
@@ -8,7 +8,7 @@ x= np.array([[1,2,3,4,5],[2,3,4,5,6],[3,4,5,6,7],[4,5,6,7,8],[5,6,7,8,9]])
 
 print(x.shape,y.shape)#(7, 3) (7,)
 x=x.reshape(5,5,1)
-print(x)#[[[1],[2],[3]],[[2],[3],[4]],[[3],[4],[5]],[[4],[5],[6]], [[5],[6] ...
+print(x) #  [[[1],[2],[3]],[[2],[3],[4]],[[3],[4],[5]],[[4],[5],[6]], [[5],[6] ...
 print(x.shape) #(5, 5, 1)
 
 #2.모델 구성
