@@ -1,6 +1,6 @@
+import numpy as np
 from tensorflow.python.keras.models import Sequential,Model
 from tensorflow.python.keras.layers import Dense, Dropout, Conv2D, Flatten, MaxPooling2D, Input
-import numpy as np
 from sklearn.metrics import r2_score, accuracy_score
 from sklearn.preprocessing  import MinMaxScaler
 #from keras.utils import to_categorical
@@ -37,8 +37,9 @@ x_test = x_test.reshape(10000, 28*28)
 #scaler=StandardScaler()
 #scaler=MaxAbsScaler()
 #scaler=MinMaxScaler()
-#scaler=RobustScaler()
-
+scaler=RobustScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
 
 print("x_train : ",x_train.shape) # x_train : (47040000, 1)
 print("x_test : ",x_test.shape)# x_test :(7840000, 1)
