@@ -92,21 +92,23 @@ plt.show()
 
 """
 NON
+loss :  0.3506157696247101
+acc :  0.8537042737007141
 
-"""
-"""
-scaler = StandardScaler()
+StandardScaler
+loss :  0.2250528633594513
+acc :  0.9103207588195801
 
-"""
-"""
-#scaler = MinMaxScaler()
+MinMaxScaler
+loss :  0.2680560350418091
+acc :  0.8914915919303894
 
-"""
-"""
-#scaler = MaxAbsScaler()
+MaxAbsScaler
+loss :  0.22936224937438965
+acc :  0.9102346897125244
 
+RobustScaler
+loss :  0.22008618712425232
+acc :  0.912472128868103
 """
-"""
-scaler = RobustScaler()
-
-"""
+# 결론 : RobustScaler 승
