@@ -1,15 +1,11 @@
+import numpy as np
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler, StandardScaler #전처리
-from sklearn.preprocessing import MaxAbsScaler, RobustScaler #전처리
+from sklearn.preprocessing import MinMaxScaler, StandardScaler,MaxAbsScaler, RobustScaler #전처리
 from sklearn.metrics import r2_score, accuracy_score
-
 #교육용 데이터셋
 from sklearn.datasets import fetch_california_housing
-
-
 
 #1. 데이터
 datasets= fetch_california_housing()
@@ -22,10 +18,10 @@ x_train, x_test, y_train, y_test = train_test_split(
     x,y,
     train_size=0.7,random_state=8715
 )
-scaler = StandardScaler()
+#scaler = StandardScaler()
 #scaler = MinMaxScaler()
 #scaler = MaxAbsScaler()
-#scaler = RobustScaler()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -57,18 +53,20 @@ print(hist.history)
 #4. 평가, 예측 
 loss = model.evaluate(x_test,y_test)
 print('loss : ',loss)
-result =model.predict([17])
 """
 NON
-194/194 [==============================] - 0s 1ms/step - loss: 0.6167
 loss :  0.6167314052581787
-"""
-"""
+
 scaler = StandardScaler()
-194/194 [==============================] - 0s 904us/step - loss: 0.6002
 loss :  0.5250846147537231
-"""
-"""
+
 #scaler = MinMaxScaler()
 loss :  0.5232634544372559
+
+#scaler = MaxAbsScaler()
+loss :  0.5247334837913513
+
+#scaler = RobustScaler()
+loss :  0.5263611674308777
 """
+# 결과 : MinMaxScaler_승
