@@ -1,20 +1,17 @@
 
 #데이콘  따릉이 문제 풀이
-from sklearn.metrics import r2_score
-import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split 
 from tensorflow.keras.models import Sequential #Sequential모델 
 from tensorflow.keras.layers import Dense #Dense
-from sklearn.model_selection import train_test_split 
-#대회에서 rmse로 사용 
 #우리는 rmse 모르니까 유사지표 사용 
-from sklearn.metrics import r2_score, mean_squared_error #mse에서 루트 씌우면 rmse로 할 수 있을지도?
-import pandas as pd
+from sklearn.metrics import r2_score, mean_squared_error ?#대회에서 rmse로 사용  #mse에서 루트 씌우면 rmse로 할 수 있을지도
 # 우리가 사용할 수 있도록 바꿔야함 
 
 #1. 데이터
 
-path = "./_data/ddarung/"
+path = "c:/study/_data/dacon_ddarung/"
 #./: 현재폴더 | 여기서 .는 스터디폴더
 
 train_csv=pd.read_csv(path + 'train.csv',index_col=0) #index_col은 인덱스 컬럼이 뭐냐? #인덱스는 데이터가 아니니까 빼야지! 
@@ -111,13 +108,12 @@ loss=model.evaluate(x_test,y_test)
 print('loss: ',loss)
 # nan = 데이터가 없다, 원본 데이터 값이 없어서 nan이 나온다. 0은 데이터가 있는 것 
 # 결집치 값 처리 첫 번째 걍 0으로 처리
-
+y_pred = model.predict(x_test)
+print(f'r2 : {r2_score(y_test,y_pred)}')
 
 
 '''
-Dense : 
-epoch : 
-batch_size : 
-loss() :  
-r2스코어 :  
+loss:  2882.97900390625
+13/13 [==============================] - 0s 4ms/step
+r2 : 0.5867016460444612
 '''
