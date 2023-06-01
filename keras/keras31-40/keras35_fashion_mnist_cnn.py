@@ -1,23 +1,17 @@
-import tensorflow as tf
+import numpy as np
+from tensorflow.keras.datasets import fashion_mnist
+from tensorflow.keras.utils import to_categorical
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MaxAbsScaler, RobustScaler #전처리
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Conv2D, Flatten
-import numpy as np
+
 from sklearn.metrics import r2_score, accuracy_score
-from sklearn.preprocessing  import MinMaxScaler
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.datasets import mnist
-from sklearn.preprocessing import MinMaxScaler, StandardScaler #전처리
-from sklearn.preprocessing import MaxAbsScaler, RobustScaler #전처리
-from tensorflow.keras.datasets import fashion_mnist
 
 
-
+# 1. 데이터
 
 (x_train,y_train),(x_test,y_test) = fashion_mnist.load_data()
-
-
 print((x_train.shape,y_train.shape),(x_test.shape,y_test.shape)) #((60000, 28, 28), (60000,)) ((10000, 28, 28), (10000,))
-
 
 scaler = MinMaxScaler()
 x_train = x_train.reshape(-1,1)
@@ -26,6 +20,7 @@ x_test = x_test.reshape(-1,1)
 x_test = scaler.transform(x_test)
 print("x_train.shape01: ",x_train.shape)
 print("y_train.shape01 : ",y_train.shape)
+
 x_train = x_train.reshape(60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1) # 데이터의 구조만 바귀는 것 순서와 값이 바뀌는 게 아님
 y_train= to_categorical(y_train)
@@ -54,8 +49,6 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(10, activation='relu'))
 model.add(Dense(10, activation='softmax'))
 model.summary()
-
-
 
 
 #3.컴파일,훈련
