@@ -23,7 +23,7 @@ file_list = list(PATH.parent.iterdir()) # iterdir : 파일 리스트 생성
 # list(PATH.parent.iterdir()) # iterdir : 파일 리스트 생성
 print(f'file_list : {file_list}') 
 
-sample_image = tf.io.read_file(str(PATH /'train20.jpg')) # 파일을 의 내용을 바이트 열로 읽어서 반환 
+sample_image = tf.io.read_file(str(PATH /'train20/01260A20.jpg')) # 파일을 의 내용을 바이트 열로 읽어서 반환 
 print(f'sample_image : {sample_image}')
 # str(PATH / 'train/1.jpg') 파일의 경로를 문자열 형태로 변환 
 sample_image = tf.io.decode_jpeg(sample_image) # 위의 이미지를 디코딩하여 텐서로 변환
@@ -45,42 +45,15 @@ def load(image_file):
 
   return image
 
-inp = load(str(PATH / 'train/100.jpg'))
-re = load(str(PATH / 'train/100.jpg'))
+inp = load(str(PATH / 'train20/01260A20.jpg'))
+re = load(str(PATH / 'train60/06762A60.jpg'))
+# print(f'inp : {inp}')
+# print(f're : {re}')
 # Casting to int for matplotlib to display the images
 plt.figure()
 plt.imshow(inp / 255.0)
 plt.figure()
 plt.imshow(re / 255.0)
-
-'''
-def load(image_file):
-  # image_file 경로에 있는 이미지 파일을 읽습니다. 
-  image = tf.io.read_file(image_file)
-  image = tf.io.decode_jpeg(image)
-
-  # # Split each image tensor into two tensors:
-  # # - one with a real building facade image
-  # # - one with an architecture label image 
-  # w = tf.shape(image)[1]
-  # w = w // 2
-  # input_image = image[:, w:, :]
-  # real_image = image[:, :w, :]
-
-  # Convert both images to float32 tensors
-  input_image = tf.cast(input_image, tf.float32)
-  real_image = tf.cast(real_image, tf.float32)
-
-  return image
-
-inp = load(str(PATH / 'train/100.jpg'))
-re = load(str(PATH / 'train/100.jpg'))
-# Casting to int for matplotlib to display the images
-plt.figure()
-plt.imshow(inp / 255.0)
-plt.figure()
-plt.imshow(re / 255.0)
-'''
 
 '''
 pix2pix 논문에 설명된 대로 훈련 세트를 전처리하기 위해 랜덤 지터링과 미러링을 적용해야 합니다.
@@ -93,6 +66,8 @@ pix2pix 논문에 설명된 대로 훈련 세트를 전처리하기 위해 랜�
 '''
 # 2) 전처리
 # The facade training set consist of 400 images
+# 파사드 교육 세트는 400개의 이미지로 구성됩니다
+# 이 경우 훈련 데이터 세트를 섞는 데 사용되는 버퍼의 크기를 지정합니다.
 BUFFER_SIZE = 400
 # The batch size of 1 produced better results for the U-Net in the original pix2pix experiment
 BATCH_SIZE = 1
@@ -126,14 +101,19 @@ def normalize(input_image, real_image):
 def random_jitter(input_image, real_image):
   # Resizing to 286x286
   input_image, real_image = resize(input_image, real_image, 286, 286)
-
+  #resize() = tf.image.resize(input_image, [height, width], method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
   # Random cropping back to 256x256
   input_image, real_image = random_crop(input_image, real_image)
+  # random_crop() = 
+  # stacked_image = tf.stack([input_image, real_image], axis=0)
+  # cropped_image = tf.image.random_crop(stacked_image, size=[2, IMG_HEIGHT, IMG_WIDTH, 3])
 
-  if tf.random.uniform(()) > 0.5:
+
+  if tf.random.uniform(()) > 0.5: # tf.random.uniform(())0과 1 사이의 난수를 생성합니다.
     # Random mirroring
     input_image = tf.image.flip_left_right(input_image)
     real_image = tf.image.flip_left_right(real_image)
+    # 코드 블록 내에서 tf.image.flip_left_right입력 이미지와 실제 이미지를 모두 가로로 뒤집기(미러링)하는 데 사용됩니다.
 
   return input_image, real_image
 
@@ -162,7 +142,9 @@ def load_image_test(image_file):
 
 # tf.data로 입력 파이프라인 구축하기
 
-train_dataset = tf.data.Dataset.list_files(str(PATH / 'train/*.jpg'))
+train_dataset = tf.data.Dataset.list_files(str(PATH / 'train20/*.jpg'))
+# 추가
+# train_dataset += tf.data.Dataset.list_files(str(PATH / 'train60/*.jpg'))
 train_dataset = train_dataset.map(load_image_train,
                                   num_parallel_calls=tf.data.AUTOTUNE)
 train_dataset = train_dataset.shuffle(BUFFER_SIZE)
@@ -170,6 +152,8 @@ train_dataset = train_dataset.batch(BATCH_SIZE)
 
 try:
   test_dataset = tf.data.Dataset.list_files(str(PATH / 'test/*.jpg'))
+  # 추가
+  # test_dataset += tf.data.Dataset.list_files(str(PATH / 'test/*.jpg'))
 except tf.errors.InvalidArgumentError:
   test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
 test_dataset = test_dataset.map(load_image_test)
