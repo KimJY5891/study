@@ -12,7 +12,7 @@ from IPython import display
 
 # 1. 데이터
 # 트레인 ab 어떻게 넣어야 하는지 확인하고 넣어보기
-PATH = 'C:/20to60_asian_train_datasets/'
+PATH = 'D:/20to60_asian_train_datasets/'
 # C:\20to60_asian_train_datasets
 # C:\20to60_asian_train_datasets\train20
 # C:\20to60_asian_train_datasets\train60
@@ -21,11 +21,9 @@ PATH = Path(PATH)  # 문자열을 Path 객체로 변환
 print(f'PATH : {PATH}') # PATH : 이미지 폴더 경로
 file_list = list(PATH.parent.iterdir()) # iterdir : 파일 리스트 생성
 # list(PATH.parent.iterdir()) # iterdir : 파일 리스트 생성
-print(f'PATH : {PATH}') # PATH : 이미지 폴더 경로
-print(f'file_list : {file_list}') # PATH : 이미지 폴더 경로
+print(f'file_list : {file_list}') 
 
-
-sample_image = tf.io.read_file(str(PATH / 'train20/0001_1992_22_00000067_D.jpg')) # 파일을 의 내용을 바이트 열로 읽어서 반환 
+sample_image = tf.io.read_file(str(PATH /'train20.jpg')) # 파일을 의 내용을 바이트 열로 읽어서 반환 
 print(f'sample_image : {sample_image}')
 # str(PATH / 'train/1.jpg') 파일의 경로를 문자열 형태로 변환 
 sample_image = tf.io.decode_jpeg(sample_image) # 위의 이미지를 디코딩하여 텐서로 변환
@@ -36,37 +34,53 @@ plt.imshow(sample_image)
 
 # 이미지 확인 
 def load(image_file):
-  # Read and decode an image file to a uint8 tensor
-  image = tf.io.read_file(image_file)
-  image = tf.io.decode_jpeg(image)
-
-# 이미지 확인 
-def load(image_file):
   # image_file 경로에 있는 이미지 파일을 읽습니다. 
   image = tf.io.read_file(image_file)
   image = tf.io.decode_jpeg(image)
 
-  # Split each image tensor into two tensors:
-  # - one with a real building facade image
-  # - one with an architecture label image 
-  w = tf.shape(image)[1]
-  w = w // 2
-  input_image = image[:, w:, :]
-  real_image = image[:, :w, :]
-
   # Convert both images to float32 tensors
-  input_image = tf.cast(input_image, tf.float32)
-  real_image = tf.cast(real_image, tf.float32)
+  image = tf.cast(image, tf.float32) 
+  # casting 혹은 type casting은 데이터 타이을 변경하는 작업
+  # 즉 float32형태로 변환하는것
 
-  return input_image, real_image
+  return image
 
-inp, re = load(str(PATH / 'train/100.jpg'))
+inp = load(str(PATH / 'train/100.jpg'))
+re = load(str(PATH / 'train/100.jpg'))
 # Casting to int for matplotlib to display the images
 plt.figure()
 plt.imshow(inp / 255.0)
 plt.figure()
 plt.imshow(re / 255.0)
 
+'''
+def load(image_file):
+  # image_file 경로에 있는 이미지 파일을 읽습니다. 
+  image = tf.io.read_file(image_file)
+  image = tf.io.decode_jpeg(image)
+
+  # # Split each image tensor into two tensors:
+  # # - one with a real building facade image
+  # # - one with an architecture label image 
+  # w = tf.shape(image)[1]
+  # w = w // 2
+  # input_image = image[:, w:, :]
+  # real_image = image[:, :w, :]
+
+  # Convert both images to float32 tensors
+  input_image = tf.cast(input_image, tf.float32)
+  real_image = tf.cast(real_image, tf.float32)
+
+  return image
+
+inp = load(str(PATH / 'train/100.jpg'))
+re = load(str(PATH / 'train/100.jpg'))
+# Casting to int for matplotlib to display the images
+plt.figure()
+plt.imshow(inp / 255.0)
+plt.figure()
+plt.imshow(re / 255.0)
+'''
 
 '''
 pix2pix 논문에 설명된 대로 훈련 세트를 전처리하기 위해 랜덤 지터링과 미러링을 적용해야 합니다.
