@@ -68,12 +68,12 @@ pix2pix 논문에 설명된 대로 훈련 세트를 전처리하기 위해 랜�
 # The facade training set consist of 400 images
 # 파사드 교육 세트는 400개의 이미지로 구성됩니다
 # 이 경우 훈련 데이터 세트를 섞는 데 사용되는 버퍼의 크기를 지정합니다.
-BUFFER_SIZE = 400
+BUFFER_SIZE = 50
 # The batch size of 1 produced better results for the U-Net in the original pix2pix experiment
 BATCH_SIZE = 1
 # Each image is 256x256 in size
-IMG_WIDTH = 256
-IMG_HEIGHT = 256
+IMG_WIDTH = 200
+IMG_HEIGHT = 200
 
 def resize(input_image, real_image, height, width):
   input_image = tf.image.resize(input_image, [height, width],
@@ -116,10 +116,23 @@ def random_jitter(input_image, real_image): # 여러방법으로 잘라서 증�
     # 코드 블록 내에서 tf.image.flip_left_right입력 이미지와 실제 이미지를 모두 가로로 뒤집기(미러링)하는 데 사용됩니다.
 
   return input_image, real_image
-
+'''
+# 변경 전
 plt.figure(figsize=(6, 6))
 for i in range(4):
   rj_inp, rj_re = random_jitter(inp, re)
+  plt.subplot(2, 2, i + 1)
+  plt.imshow(rj_inp / 255.0)
+  plt.axis('off')
+plt.show()
+'''
+plt.figure(figsize=(6, 6))
+for i in range(4):
+  rj_inp, rj_re = random_jitter(inp, re)
+  
+  if rj_inp.shape != (200, 200, 3):
+    rj_inp = tf.image.resize(rj_inp, [200, 200])
+    
   plt.subplot(2, 2, i + 1)
   plt.imshow(rj_inp / 255.0)
   plt.axis('off')
@@ -149,7 +162,8 @@ def load_image_test(input_file, real_file):
 train_dataset_20 = tf.data.Dataset.list_files(str(PATH / 'train20/*.jpg'))
 train_dataset_60 = tf.data.Dataset.list_files(str(PATH / 'train60/*.jpg'))
 train_dataset = train_dataset_20.concatenate(train_dataset_60)
-train_dataset = train_dataset.map(load_image_train, num_parallel_calls=tf.data.AUTOTUNE) 
+train_dataset = train_dataset.map(lambda x: load_image_train(x, x), num_parallel_calls=tf.data.AUTOTUNE)
+# 원래 코드 : train_dataset = train_dataset.map(load_image_train, num_parallel_calls=tf.data.AUTOTUNE) 
 '''
   # map() 함수는 데이터셋의 각 요소에 대해 주어진 함수를 적용하고,
   그 결과를 새로운 데이터셋으로 변환하는 역할을 합니다.
@@ -171,12 +185,15 @@ try:
   `except` 블록을 건너뛰고 실행이 계속됩니다.
   '''
   test_dataset_20 = tf.data.Dataset.list_files(str(PATH / 'test20/*.jpg'))
+  test_dataset_60 = tf.data.Dataset.list_files(str(PATH / 'test60/*.jpg'))
 
 except tf.errors.InvalidArgumentError: # 예외 처리 구문으로, 특정 유형의 예외가 발생했을 때 실행
   # tf.errors.InvalidArgumentError : 이 예외는 주로 잘못된 인수(argument)가 함수에 전달되었을 때 발생
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
-test_dataset = test_dataset.map(load_image_test)
+  test_dataset_20 = tf.data.Dataset.list_files(str(PATH / 'val20/*.jpg'))
+  test_dataset_60 = tf.data.Dataset.list_files(str(PATH / 'val60/*.jpg'))
+
+test_dataset = test_dataset_20.map(lambda x: load_image_test(x, x))
+# 원래 코드 : test_dataset = test_dataset.map(load_image_test)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
 # 2. 모델 구성
