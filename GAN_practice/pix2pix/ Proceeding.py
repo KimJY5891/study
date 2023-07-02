@@ -98,7 +98,7 @@ def normalize(input_image, real_image):
   return input_image, real_image
 
 @tf.function()
-def random_jitter(input_image, real_image):
+def random_jitter(input_image, real_image): # 여러방법으로 잘라서 증폭
   # Resizing to 286x286
   input_image, real_image = resize(input_image, real_image, 286, 286)
   #resize() = tf.image.resize(input_image, [height, width], method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
@@ -125,15 +125,19 @@ for i in range(4):
   plt.axis('off')
 plt.show()
 
-def load_image_train(image_file):
-  input_image, real_image = load(image_file)
-  input_image, real_image = random_jitter(input_image, real_image)
-  input_image, real_image = normalize(input_image, real_image)
+def load_image_train(input_file, real_file):
+  input_image = load(input_file) # 로드 # 변경해줘야함 각각 들어가야하니까 
+  real_image = load(real_file) # 로드 # 변경해줘야함 각각 들어가야하니까 
+  input_image, real_image = random_jitter(input_image, real_image)  
+  # 지터에 리사이즈 있음
+  # 여러방법으로 잘라서 증폭
+  input_image, real_image = normalize(input_image, real_image) # -1 ~ 1 사이로 정규화 
 
   return input_image, real_image
 
-def load_image_test(image_file):
-  input_image, real_image = load(image_file)
+def load_image_test(input_file, real_file):
+  input_image = load(input_file) # 로드 # 변경해줘야함 각각 들어가야하니까 
+  real_image = load(real_file) # 로드 # 변경해줘야함 각각 들어가야하니까 
   input_image, real_image = resize(input_image, real_image,
                                    IMG_HEIGHT, IMG_WIDTH)
   input_image, real_image = normalize(input_image, real_image)
@@ -142,23 +146,40 @@ def load_image_test(image_file):
 
 # tf.data로 입력 파이프라인 구축하기
 
-train_dataset = tf.data.Dataset.list_files(str(PATH / 'train20/*.jpg'))
-# 추가
-# train_dataset += tf.data.Dataset.list_files(str(PATH / 'train60/*.jpg'))
-train_dataset = train_dataset.map(load_image_train,
-                                  num_parallel_calls=tf.data.AUTOTUNE)
+train_dataset_20 = tf.data.Dataset.list_files(str(PATH / 'train20/*.jpg'))
+train_dataset_60 = tf.data.Dataset.list_files(str(PATH / 'train60/*.jpg'))
+train_dataset = train_dataset_20.concatenate(train_dataset_60)
+train_dataset = train_dataset.map(load_image_train, num_parallel_calls=tf.data.AUTOTUNE) 
+'''
+  # map() 함수는 데이터셋의 각 요소에 대해 주어진 함수를 적용하고,
+  그 결과를 새로운 데이터셋으로 변환하는 역할을 합니다.
+  여기서는 load_image_train 함수를 각 이미지에 적용하여
+  입력 이미지와 실제 이미지를 전처리한 후 반환합니다.
+
+  # num_parallel_calls=tf.data.AUTOTUNE는
+  데이터셋 변환 작업을 병렬로 처리하는 데 사용되는 스레드의 수를 자동으로 설정하는 매개변수입니다.
+  AUTOTUNE으로 설정하면 TensorFlow가 시스템의 리소스와 데이터셋의 크기에 따라
+  최적의 스레드 수를 선택합니다. 이렇게 함으로써 데이터 전처리 작업을 효율적으로 수행할 수 있습니다.
+'''
 train_dataset = train_dataset.shuffle(BUFFER_SIZE)
 train_dataset = train_dataset.batch(BATCH_SIZE)
 
 try:
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'test/*.jpg'))
-  # 추가
-  # test_dataset += tf.data.Dataset.list_files(str(PATH / 'test/*.jpg'))
-except tf.errors.InvalidArgumentError:
+  '''  
+  `try` 블록은 예외가 발생할 가능성이 있는 코드를 포함합니다.
+  `try` 블록 내의 코드가 실행되고, 만약 예외가 발생하지 않으면
+  `except` 블록을 건너뛰고 실행이 계속됩니다.
+  '''
+  test_dataset_20 = tf.data.Dataset.list_files(str(PATH / 'test20/*.jpg'))
+
+except tf.errors.InvalidArgumentError: # 예외 처리 구문으로, 특정 유형의 예외가 발생했을 때 실행
+  # tf.errors.InvalidArgumentError : 이 예외는 주로 잘못된 인수(argument)가 함수에 전달되었을 때 발생
+  test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
   test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
 test_dataset = test_dataset.map(load_image_test)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
+# 2. 모델 구성
 # 생성기 구축하기
 '''
 pix2pix cGAN 생성기는 수정된 U-Net{:.external}입니다. U-Net은 인코더(다운샘플러)와 디코더(업샘플러)로 구성됩니다. 
