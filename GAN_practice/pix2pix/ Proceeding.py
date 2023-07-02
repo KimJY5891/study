@@ -1,4 +1,7 @@
 import tensorflow as tf
+from tensorflow.keras.layers import ConvLSTM2D, Conv2DTranspose
+from tensorflow.keras.layers import BatchNormalization,Dropout,ReLU
+from tensorflow.keras import Sequential
 
 import os
 import pathlib 
@@ -27,8 +30,7 @@ sample_image = tf.io.read_file(str(PATH /'train20/01260A20.jpg')) # 파일을 �
 print(f'sample_image : {sample_image}')
 # str(PATH / 'train/1.jpg') 파일의 경로를 문자열 형태로 변환 
 sample_image = tf.io.decode_jpeg(sample_image) # 위의 이미지를 디코딩하여 텐서로 변환
-print(sample_image.shape) # (472, 472, 3)
-
+print(sample_image.shape) # 
 plt.figure()
 plt.imshow(sample_image)
 
@@ -72,8 +74,8 @@ BUFFER_SIZE = 50
 # The batch size of 1 produced better results for the U-Net in the original pix2pix experiment
 BATCH_SIZE = 1
 # Each image is 256x256 in size
-IMG_WIDTH = 200
-IMG_HEIGHT = 200
+IMG_WIDTH = 256
+IMG_HEIGHT = 256
 
 def resize(input_image, real_image, height, width):
   input_image = tf.image.resize(input_image, [height, width],
@@ -100,7 +102,7 @@ def normalize(input_image, real_image):
 @tf.function()
 def random_jitter(input_image, real_image): # 여러방법으로 잘라서 증폭
   # Resizing to 286x286
-  input_image, real_image = resize(input_image, real_image, 286, 286)
+  input_image, real_image = resize(input_image, real_image, 256, 256)
   #resize() = tf.image.resize(input_image, [height, width], method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
   # Random cropping back to 256x256
   input_image, real_image = random_crop(input_image, real_image)
@@ -196,6 +198,8 @@ test_dataset = test_dataset_20.map(lambda x: load_image_test(x, x))
 # 원래 코드 : test_dataset = test_dataset.map(load_image_test)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
+
+
 # 2. 모델 구성
 # 생성기 구축하기
 '''
@@ -226,36 +230,36 @@ def downsample(filters, size, apply_batchnorm=True):
 
 down_model = downsample(3, 4)
 down_result = down_model(tf.expand_dims(inp, 0))
-print (down_result.shape)
+print (down_result.shape) # (1, 181, 154, 3)
 
 # 업샘플러(디코더) 정의:
 
 def upsample(filters, size, apply_dropout=False):
   initializer = tf.random_normal_initializer(0., 0.02)
 
-  result = tf.keras.Sequential()
+  result = Sequential()
   result.add(
-    tf.keras.layers.Conv2DTranspose(filters, size, strides=2,
-                                    padding='same',
-                                    kernel_initializer=initializer,
+    Conv2DTranspose(filters, size, strides=2,
+                    padding='same',kernel_initializer=initializer,
                                     use_bias=False))
 
-  result.add(tf.keras.layers.BatchNormalization())
+  result.add(BatchNormalization())
 
   if apply_dropout:
-      result.add(tf.keras.layers.Dropout(0.5))
+      result.add(Dropout(0.5))
 
-  result.add(tf.keras.layers.ReLU())
+  result.add(ReLU())
 
   return result
 
-up_model = upsample(3, 4)
+up_model = upsample(3, 4) # conv2dTranspose의 필터 : 3, 커널 사이즈 : 4
 up_result = up_model(down_result)
-print (up_result.shape)
+print (up_result.shape) # (1, 362, 308, 3)
 
 # 다운샘플러와 업샘플러로 생성기를 정의합니다.
 
 def Generator():
+  # 현인풋 : 
   inputs = tf.keras.layers.Input(shape=[256, 256, 3])
 
   down_stack = [
@@ -309,7 +313,8 @@ def Generator():
 
 generator = Generator()
 tf.keras.utils.plot_model(generator, show_shapes=True, dpi=64)
-
+# keras 모델의 아키텍처를 시각화하는 도구입니다.
+# 주어진 모델을 그래프 형식으로 표현하고, 각 레이어의 입력 및 출력 형태를 시각적으로 보여줍니다.
 gen_output = generator(inp[tf.newaxis, ...], training=False)
 plt.imshow(gen_output[0, ...])
 
