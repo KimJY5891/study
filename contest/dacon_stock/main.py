@@ -79,11 +79,7 @@ def split_x(dataset, timesteps) :
     for i in range(len(dataset)-timesteps +1) :
         subset = dataset[i:(i+timesteps)]
         list.append(subset)
-    return np.array(list)
-def split_y(dataset, timesteps) :
-    list = []
-    # timesteps+1
-        
+    return np.array(list)        
 
 def LSTM02(input_shape=(0,0)):
     model = Sequential()
