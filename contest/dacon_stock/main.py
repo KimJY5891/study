@@ -79,7 +79,11 @@ def split_x(dataset, timesteps) :
     for i in range(len(dataset)-timesteps +1) :
         subset = dataset[i:(i+timesteps)]
         list.append(subset)
-    return np.array(list)        
+    return np.array(list)
+def split_y(dataset, timesteps) :
+    list = []
+    # timesteps+1
+        
 
 def LSTM02(input_shape=(0,0)):
     model = Sequential()
@@ -116,10 +120,13 @@ for code in tqdm(unique_codes):
     print(f'tc.shape : {tc.shape}') #(494,)
     
     # x, y 나누기 
-    x = split_x(train_close-1,timesteps)
+    x = split_x(train_close,timesteps)
     # y = pd.종목_csv('종가',axis=1)
-    y = tc[timesteps-2:]
-    
+    y = tc[timesteps-1:]
+    x_test = x[-1:]
+    y_test = y[-1: ]    
+    x = x[482:]
+    y = y[482:]
     print(x.shape) # (483, 12, 5)
     print(y.shape) # (483,)
     
@@ -134,7 +141,7 @@ for code in tqdm(unique_codes):
     model.fit(x,y,epochs=256,batch_size=32,callbacks=[es,rl])
 
     # 4. 예측, 결과 
-    predictions = model.predict(x) # 향후 15개의 거래일에 대해서 예측
+    predictions = model.predict(x_test) # 향후 15개의 거래일에 대해서 예측
 
     # 최종 수익률 계산
     final_return = (predictions.iloc[-1] - predictions.iloc[0]) / predictions.iloc[0]
