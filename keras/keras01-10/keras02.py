@@ -1,8 +1,10 @@
 # 1. 데이터
 import numpy as np
-x = np.array([1,2,3])
+x = np.array([1,2,3]) # 파이썬 리스트에서 1차원 NumPy 배열을 생성
 y = np.array([1,2,3])
 #loss는 작을 수록 좋다. 
+print(x) # [1 2 3]
+print(type(x)) # <class 'numpy.ndarray'>
 
 # 2. 모델 구성
 import tensorflow as tf
@@ -10,7 +12,6 @@ from tensorflow.keras.models import Sequential
 # 텐서플로우 안에 케라스 모에 모델스 안에 Sequential를 가지고 와라
 from tensorflow.keras.layers import Dense
 # 텐서플로우 안에 케라스 안에 레어스 안에 Dense를 가지고 와라
-
 model=Sequential()
 model.add(Dense(1,input_dim=1))
 # 단일 구성 모델
