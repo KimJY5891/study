@@ -1,5 +1,6 @@
 import subprocess
-
+# conda install -c conda-forge ffmpeg
+# pip install ffmpeg
 def run_ffmpeg_command(command):
     # 지정된 fmpeg 명령을 실행
     subprocess.run(command, check=True)
