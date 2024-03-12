@@ -1,4 +1,5 @@
 # api 가지고 올때 최상단에 몰빵해서 작성하면 가독성이 좋아진다.
+# 하지만 넘파이는 라이브러리(코드의 모음)이라고 보는게 좋음.
 # import 가져올때 순서는 상관없다.
 import numpy as np
 from tensorflow.keras.models import Sequential
