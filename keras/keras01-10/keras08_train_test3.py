@@ -1,7 +1,7 @@
-#x의 전체 값을 잘라서 트레인과 테스트 값으로 만들 수 있다.
+#x의 전체 값을 잘라서 트레인과 테스트 값으로 만들 수 있다. 
 import sklearn
 import numpy as np
-from sklearn.medel_selection import train_test_split
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
@@ -24,8 +24,10 @@ x_train, x_test, y_train, y_test = train_test_split{
     shuffle=True
     #디폴트 True
 }
-print(x_train,x_test) 
-print(y_train,y_test)
+print(f'x_train : {x_train},x_test : {x_test}') 
+print(f'y_train : {y_train},y_test : {y_test}') 
+# x_train : [ 1  8  3 10  5  4  7],x_test : [9 2 6]
+# y_train : [10  3  8  1  6  7  4],y_test : [2 9 5]
 
 # 2. 모델구성
 model=Sequential()
