@@ -1,7 +1,7 @@
 #x의 전체 값을 잘라서 트레인과 테스트 값으로 만들 수 있다.
 import sklearn
 import numpy as np
-import sklearn.medel_selection import train_test_split
+from sklearn.medel_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
