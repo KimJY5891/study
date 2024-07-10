@@ -57,8 +57,6 @@ print(train_csv.isnull().sum())
 print(train_csv.info())
 print(train_csv.shape)
 
-#####################train_csv 데이터에서 x와 y를 분리#######################
-
 x = train_csv.drop(['count'],axis=1)#(1328, 9)
 #drop : 빼버리겠다.엑시즈 열
 #두 개이상 리스트
