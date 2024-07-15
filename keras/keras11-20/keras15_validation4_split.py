@@ -6,10 +6,15 @@ import numpy as np
 #1. 데이터
 x =np.array(range(1,17))
 y =np.array(range(1,17))
-print(x_test) 
-print(x_val)
-print(y_test)
-print(y_val)
+
+x=np.array(range(1,17)) #(10,)
+y=np.array(range(1,17)) 
+
+x_train=np.array([14,15,16])
+y_train=np.array([14,15,16])
+
+x_test=np.array([11,12,13])
+y_test=np.array([11,12,13])
 
 #2. 모델
 model=Sequential()
