@@ -43,10 +43,10 @@ from tensorflow.python.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss',patience=100,mode='min',
               verbose=1, 
               restore_best_weights=True
-              ) # 브레이크 잡은 시점에서 가중치를 
+              ) # 브레이크 잡은 시점에서 가중치를 사용해서 예측을 실행함 ( 복원한다고 표현)
 #verbose = 끊는 지점을 볼수 있다. 
-# val_lose가 났다. 
-#patoemce 몇 번 참을지 - 
+# val_loss가 나음
+# patience = 몇 번까지 참을지
 #mode = min - 최소 값을 찾아라 
 hist =model.fit(x_train,y_train,epochs=1000,batch_size=800,
           validation_split=0.2,verbose=1,
