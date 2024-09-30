@@ -16,7 +16,7 @@ test_csv=pd.read_csv(path + 'test.csv',index_col=0)
 print(train_csv.isnull().sum())
 train_csv = train_csv.dropna()
 print(train_csv.isnull().sum())
-print(train_csv.info())
+print(train_csv.info()) # 함수를 이용하여 데이터 df의 정보를 출력함 
 print(train_csv.shape)
 ####################################### 결측치 처리 #######################################                                                                                 #
 x = train_csv.drop(['Outcome'],axis=1)#
